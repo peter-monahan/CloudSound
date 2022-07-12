@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
 
-    static getCurrentUserById(id) {
-      return User.scope("currentUser").findByPk(id);
+    static /*async*/ getCurrentUserById(id) {
+      return /*await*/ User.scope("currentUser").findByPk(id);
     }
 
     static async login({ credential, password }) {
@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       if (user && user.validatePassword(password)) {
         return await User.scope('currentUser').findByPk(user.id);
+        // return await User.getCurrentUserById(user.id);
       }
     }
 
@@ -40,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         hashedPassword
       });
       return await User.scope('currentUser').findByPk(user.id);
+      // return await User.getCurrentUserById(user.id);
     }
 
     static associate(models) {
@@ -62,6 +64,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         len: [3, 256],
         isEmail: true
@@ -70,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         len: [4, 30],
         isNotEmail(value) {
