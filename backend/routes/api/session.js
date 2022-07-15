@@ -4,7 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 
 const { User } = require('../../db/models');
 
@@ -18,6 +18,9 @@ const validateLogin = [
     .withMessage('Please provide a password.'),
   handleValidationErrors
 ];
+
+
+
 
 router.get('/', (req, res) => {
   const {user} = req;
