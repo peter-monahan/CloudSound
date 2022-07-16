@@ -10,6 +10,8 @@ const { User } = require('../../db/models');
 
 const validateLogin = [
   check('credential')
+    .if(check('email').not().exists({ checkFalsy: true }))
+    .if(check('username').not().exists({ checkFalsy: true }))
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage('Please provide a valid email or username.'),
@@ -33,7 +35,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', validateLogin, async (req, res, next) => {
-  const { credential, password } = req.body;
+  let { credential, email, username } = req.body;
+  const { password } = req.body;
+  credential = credential || email || username;
 
   const user = await User.login({ credential, password });
 
