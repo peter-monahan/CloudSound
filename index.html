@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tester</title>
+  <script type="module" src="./index.js"></script>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div class="main-form">
+
+  <div class="method-div form-item">
+    <p>Method:</p>
+    <select name="Method" id="method-select">
+    <option value="GET">GET</option>
+    <option value="POST">POST</option>
+    <option value="PUT">PUT</option>
+    <option value="DELETE">DELETE</option>
+  </select></div>
+
+  <div class="form-item">
+    <p>URL:</p>
+
+    <input type="text" name="URL" id="url-input" value="/api/csrf/restore" spellcheck="false">
+  </div>
+
+  <div class="form-item">
+    <p>Headers:</p>
+
+    <textarea name="headers" id="headers-textarea" cols="80" rows="10" spellcheck="false">{
+      "Content-Type": "application/json",
+      "XSRF-TOKEN": ""
+}
+</textarea>
+  </div>
+
+  <div class="form-item">
+    <p>Body:</p>
+
+    <textarea name="body" id="body-textarea" cols="80" rows="10" spellcheck="false">{
+
+}</textarea>
+  </div>
+
+  <button id="submit-button">Submit Request</button>
+
+</div>
+
+<div class="form-item">
+  Response:
+  <textarea id="response-textarea" cols="80" rows="10" spellcheck="false"></textarea>
+
+</div>
+
+</body>
+</html>
