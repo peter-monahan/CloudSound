@@ -10,12 +10,11 @@ module.exports = {
       },
       albumId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Albums',
           key: 'id',
         },
-        // onDelete: 'cascade'
+        onDelete: 'SET NULL'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -24,7 +23,7 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
-        onDelete: 'cascade'
+        onDelete: 'CASCADE'
       },
       title: {
         type: Sequelize.STRING(64),
@@ -42,11 +41,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
   },
