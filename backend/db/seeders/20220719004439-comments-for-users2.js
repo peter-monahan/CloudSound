@@ -62,17 +62,14 @@ module.exports = {
       const user = await User.findOne({where: {username}});
 
 
-      console.log(user.username);
+
       for (let j = 0; j < songs.length; j++) {
         let { title } = songs[j];
         const song = await Song.findOne({where: {title}});
         const { body } = comment;
-        try {
 
-          await song.createComment({userId: user.id, body});
-        } catch (error) {
-          console.log(error);
-        }
+        await song.createComment({userId: user.id, body});
+
       }
     }
   },

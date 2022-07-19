@@ -56,7 +56,7 @@ module.exports = {
       const {username, songs} = userSongs[i];
 
       const user = await User.findOne({where: {username}});
-      console.log(user);
+
       for (let j = 0; j < songs.length; j++) {
         const song = songs[j];
         await user.createSong(song);

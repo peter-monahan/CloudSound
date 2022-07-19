@@ -66,16 +66,13 @@ module.exports = {
       const userPlaylist = await user.createPlaylist(playlist);
 
 
-      console.log(user.username, userPlaylist.name);
+
       for (let j = 0; j < songs.length; j++) {
         let { title } = songs[j];
         const song = await Song.findOne({where: {title}});
-        try {
 
-          await userPlaylist.addSong(song);
-        } catch (error) {
-          console.log(error);
-        }
+        await userPlaylist.addSong(song);
+
       }
     }
   },
