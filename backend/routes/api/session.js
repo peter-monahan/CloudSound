@@ -35,8 +35,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', validateLogin, async (req, res, next) => {
-  let { credential, email, username } = req.body;
-  const { password } = req.body;
+  let { credential, email, username, password } = req.body;
+
   credential = credential || email || username;
 
   const user = await User.login({ credential, password });
@@ -49,9 +49,9 @@ router.post('/', validateLogin, async (req, res, next) => {
     return next(err);
   }
 
-  await setTokenCookie(res, user);
+  let token = await setTokenCookie(res, user);
 
-  return res.json({user});
+  return res.json({user, token});
 });
 
 router.delete('/', (_req, res) => {
