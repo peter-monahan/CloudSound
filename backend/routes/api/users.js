@@ -7,6 +7,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
+const currentUserRouter = require('./current.js');
+
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
@@ -26,6 +28,8 @@ const validateSignup = [
     .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
+
+router.use('/current', currentUserRouter);
 
 router.post('/', validateSignup, async (req, res) => {
   const {email, password, username, firstName, lastName} = req.body;
