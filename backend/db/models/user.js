@@ -33,19 +33,39 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async signup({ username, email, password }) {
+    static async signup({ username, email, password, firstName, lastName}) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
         email,
-        hashedPassword
+        hashedPassword,
+        firstName,
+        lastName
       });
       return await User.scope('currentUser').findByPk(user.id);
       // return await User.getCurrentUserById(user.id);
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(
+        models.Album,
+        {foreignKey: 'userId'}
+      );
+
+      User.hasMany(
+        models.Song,
+        {foreignKey: 'userId'}
+      );
+
+      User.hasMany(
+        models.Comment,
+        {foreignKey: 'userId'}
+      );
+
+      User.hasMany(
+        models.Playlist,
+        {foreignKey: 'userId'}
+      );
     }
   }
   User.init({

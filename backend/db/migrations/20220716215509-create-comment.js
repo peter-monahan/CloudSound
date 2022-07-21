@@ -1,12 +1,21 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Albums', {
+    await queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      songId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Songs',
+          key: 'id',
+        },
+        onDelete: 'CASCADE'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -17,15 +26,9 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      title: {
-        type: Sequelize.STRING(64),
+      body: {
+        type: Sequelize.STRING(255),
         allowNull: false,
-      },
-      description: {
-        type: Sequelize.STRING(255)
-      },
-      previewImage: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Albums');
+    await queryInterface.dropTable('Comments');
   }
 };

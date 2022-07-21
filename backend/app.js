@@ -60,6 +60,7 @@ app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message);
     err.title = 'Validation error';
+    err.status = 403
   }
   next(err);
 });

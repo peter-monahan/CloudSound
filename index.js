@@ -6,6 +6,7 @@ function submitRequest() {
   const headerTextarea = document.querySelector('#headers-textarea');
   const bodyTextarea = document.querySelector('#body-textarea');
   const responseTextarea = document.querySelector('#response-textarea');
+  const statusP = document.querySelector('#status-p');
   button.addEventListener('click', async e => {
     const method = methodSelect.value;
     const url = urlInput.value;
@@ -15,7 +16,10 @@ function submitRequest() {
       method: method,
       headers: headers,
       body: method !== 'GET' ? body : undefined,
-    }).then(res => res.json()).then(data => responseTextarea.value = JSON.stringify(data, null, 4));
+    }).then(res => {
+      statusP.innerHTML = res.status;
+      return res.json()
+    }).then(data => responseTextarea.value = JSON.stringify(data, null, 4));
 
   console.log(methodSelect.value)
   console.log(urlInput.value)
