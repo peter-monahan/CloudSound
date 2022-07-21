@@ -17,7 +17,7 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      PlaylistId: {
+      playlistId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
