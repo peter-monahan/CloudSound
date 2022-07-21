@@ -33,6 +33,46 @@ const validateSongEdit = [
   handleValidationErrors
 ];
 
+
+router.get('/', async (req, res) => {
+  const songs = await Song.findAll();
+
+  return res.json({songs});
+});
+
+router.post('/', requireAuth, validateSong, async (req, res) => {
+  const { title, description, url, previewImage} = req.body;
+  const { user } = req;
+
+  const song = await user.createSong({title, description, url, previewImage});
+
+  return res.json({song});
+});
+
+router.get('/:songId', async (req, res, next) => {
+  const { songId } = req.params;
+  const song = await Song.findByPk(songId, {include: [
+    {
+      model: User,
+      as: 'Artist',
+      attributes: ['id', 'username', 'previewImage']
+    },
+    {
+      model: Album,
+      attributes: ['id', 'title', 'previewImage']
+    }
+  ]});
+  if(song) {
+    return res.json({song});
+  } else {
+    const err = new Error("The requested song couldn't be found.");
+    err.title = "Song Not Found";
+    err.errors = ["The requested song couldn't be found."];
+    err.status = 404;
+    return next(err);
+  }
+});
+
 router.put('/:songId', requireAuth, validateSongEdit, async (req, res, next) => {
   const { title, description, url, previewImage } = req.body;
   const editObj = { title, description, url, previewImage }
@@ -70,33 +110,32 @@ router.put('/:songId', requireAuth, validateSongEdit, async (req, res, next) => 
   return res.json({song});
 });
 
-router.get('/:songId', async (req, res, next) => {
-  const { songId } = req.params;
-  const song = await Song.findByPk(songId, {include: ['Artist', Album]});
-  if(song) {
-    return res.json({song});
-  } else {
-    const err = new Error("The requested song couldn't be found.");
-    err.title = "Song Not Found";
-    err.errors = ["The requested song couldn't be found."];
-    err.status = 404;
-    return next(err);
-  }
-});
-
-router.get('/', async (req, res) => {
-  const songs = await Song.findAll();
-
-  return res.json({songs});
-});
-
-router.post('/', requireAuth, validateSong, async (req, res) => {
-  const { title, description, url, previewImage} = req.body;
+router.delete('/:songId', requireAuth, async (req, res, next) => {
   const { user } = req;
+  const { songId } = req.params;
+  const song = await Song.findByPk(songId);
 
-  const song = await user.createSong({title, description, url, previewImage});
 
-  return res.json({song});
+  if(song) {
+    if(song.userId === user.id) {
+      await song.destroy();
+    } else {
+      const err = new Error("Unauthorized for this resource");
+      err.title = "Forbidden";
+      err.errors = ["Unauthorized for this resource"];
+      err.status = 403;
+      return next(err);
+    }
+  } else {
+      const err = new Error("The requested song couldn't be found.");
+      err.title = "Song Not Found";
+      err.errors = ["The requested song couldn't be found."];
+      err.status = 404;
+      return next(err);
+  }
+
+
+  return res.json({ message: 'success' });
 });
 
 module.exports = router;

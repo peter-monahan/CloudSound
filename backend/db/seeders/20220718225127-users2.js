@@ -9,6 +9,7 @@ module.exports = {
         lastName: 'Fradd',
         email: 'mattfradd@user.io',
         username: 'PintsWithAquinas',
+        previewImage: 'https://pintswithaquinas.com/favicon.ico',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
@@ -16,11 +17,12 @@ module.exports = {
         lastName: 'Martin',
         email: 'therese.of.liseuix@user.io',
         username: 'LittleFlower',
+        previewImage: 'https://www.littleflower.org/wp-content/uploads/2020/12/St-Therese-1440x825.jpg',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         firstName: 'Josh',
-        lastName: 'Dunn',
+        lastName: 'Dun',
         email: 'junn@user.io',
         username: 'JDeezle',
         hashedPassword: bcrypt.hashSync('password')
@@ -30,6 +32,7 @@ module.exports = {
         lastName: 'Joseph',
         email: 'tyjoe@user.io',
         username: 'TOP',
+        previewImage: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Twenty_one_pilots_logo_.jpg',
         hashedPassword: bcrypt.hashSync('password')
       },
       {

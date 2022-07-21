@@ -36,7 +36,7 @@ router.post('/', validateSignup, async (req, res) => {
   let user = await User.signup({email, username, password, firstName, lastName});
   let token = await setTokenCookie(res, user);
 
-  return res.json(/*{...user.dataValues, token}*/{user, token});
+  return res.json(/*{...user.dataValues, token}*/{...user.toSafeObject(), token});
 });
 
 module.exports = router;
