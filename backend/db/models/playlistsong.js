@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PlaylistSong.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     songId: {
       type: DataTypes.INTEGER,
       // allowNull: false,// Breaks stuff with using model association methods
@@ -25,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'PlaylistSong',
+    defaultScope: {
+      attributes: {
+        exclude: []
+      }
+    }
   });
   return PlaylistSong;
 };
