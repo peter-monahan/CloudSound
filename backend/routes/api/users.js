@@ -31,6 +31,22 @@ const validateSignup = [
 
 router.use('/current', currentUserRouter);
 
+router.get('/:userId/songs', async (req, res, next) => {
+  const {userId} = req.params;
+  const user = await User.findByPk(Number(userId));
+
+  if(user) {
+    const songs = await user.getSongs();
+    res.json({songs});
+  } else {
+    const err = new Error("The requested user/artist couldn't be found.");
+    err.title = "User/Artist Not Found";
+    err.errors = ["The requested user/artist couldn't be found."];
+    err.status = 404;
+    return next(err);
+  }
+});
+
 router.post('/', validateSignup, async (req, res) => {
   const {email, password, username, firstName, lastName} = req.body;
   let user = await User.signup({email, username, password, firstName, lastName});

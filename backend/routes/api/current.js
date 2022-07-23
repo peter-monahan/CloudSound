@@ -41,4 +41,11 @@ router.get('/songs', requireAuth, async (req, res) => {
   res.json({songs});
 });
 
+router.get('/playlists', requireAuth, async (req, res) => {
+  const { user } = req;
+
+  const playlists = await user.getPlaylists();
+  res.json({playlists});
+});
+
 module.exports = router;
