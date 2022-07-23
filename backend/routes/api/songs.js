@@ -1,37 +1,15 @@
 const express = require('express')
 const router = express.Router();
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+
+const { validateSong, validateSongEdit } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Song, Album } = require('../../db/models');
 
-const validateSong = [
-  check('title')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 1 })
-    .withMessage('Please provide a title with at least 1 character.'),
-  check('description')
-    .if(check('description').exists({checkFalsy: true}))
-    .isLength({ min: 1 })
-    .withMessage('A description must have at least 1 character.'),
-  check('url')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a url for the audio'),
-  handleValidationErrors
-];
+const commentsRouter = require('./comments.js');
 
-const validateSongEdit = [
-  check('title')
-    .if(check('title').exists({checkFalsy: true}))
-    .isLength({ min: 1 })
-    .withMessage('Please provide a title with at least 1 character.'),
-  check('description')
-    .if(check('description').exists({checkFalsy: true}))
-    .isLength({ min: 1 })
-    .withMessage('A description must have at least 1 character.'),
-  handleValidationErrors
-];
+
+
 
 
 router.get('/', async (req, res) => {
@@ -41,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', requireAuth, validateSong, async (req, res) => {
-  const { title, description, url, previewImage} = req.body;
+  const { title, description, url, previewImage } = req.body;
   const { user } = req;
 
   const song = await user.createSong({title, description, url, previewImage});
@@ -119,6 +97,8 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
   if(song) {
     if(song.userId === user.id) {
       await song.destroy();
+
+      return res.json({ message: `succesfully deleted song: '${song.title}' ` });
     } else {
       const err = new Error("Unauthorized for this resource");
       err.title = "Forbidden";
@@ -134,8 +114,12 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
       return next(err);
   }
 
-
-  return res.json({ message: 'success' });
 });
+
+router.use('/:songId/comments', (req, res, next) => {
+  req.songId = req.params.songId
+  return next();
+}, commentsRouter);
+
 
 module.exports = router;
