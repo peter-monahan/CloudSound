@@ -12,7 +12,7 @@ const validateSong = [
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
   check('description')
-    .if(check('description').exists({checkFalsy: true}))
+    .if(check('description').exists())
     .isLength({ min: 1 })
     .withMessage('A description must have at least 1 character.'),
   check('url')
@@ -23,11 +23,11 @@ const validateSong = [
 
 const validateSongEdit = [
   check('title')
-    .if(check('title').exists({checkFalsy: true}))
+    .if(check('title').exists())
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
   check('description')
-    .if(check('description').exists({checkFalsy: true}))
+    .if(check('description').exists())
     .isLength({ min: 1 })
     .withMessage('A description must have at least 1 character.'),
   handleValidationErrors
@@ -119,6 +119,8 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
   if(song) {
     if(song.userId === user.id) {
       await song.destroy();
+
+      return res.json({ message: `succesfully deleted song: '${song.title}' ` });
     } else {
       const err = new Error("Unauthorized for this resource");
       err.title = "Forbidden";
@@ -134,8 +136,6 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
       return next(err);
   }
 
-
-  return res.json({ message: 'success' });
 });
 
 module.exports = router;

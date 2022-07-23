@@ -12,7 +12,7 @@ const validateAlbum = [
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
   check('description')
-    .if(check('description').exists({checkFalsy: true}))
+    .if(check('description').exists())
     .isLength({ min: 1 })
     .withMessage('A description must have at least 1 character.'),
   handleValidationErrors
@@ -20,11 +20,11 @@ const validateAlbum = [
 
 const validateAlbumEdit = [
   check('title')
-    .if(check('title').exists({checkFalsy: true}))
+    .if(check('title').exists())
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
   check('description')
-    .if(check('description').exists({checkFalsy: true}))
+    .if(check('description').exists())
     .isLength({ min: 1 })
     .withMessage('A description must have at least 1 character.'),
   handleValidationErrors

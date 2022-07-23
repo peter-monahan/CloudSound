@@ -16,7 +16,7 @@ const validatePlaylist = [
 
 const validatePlaylistEdit = [
   check('name')
-    .if(check('name').exists({checkFalsy: true}))
+    .if(check('name').exists())
     .isLength({ min: 1 })
     .withMessage('Please provide a name with at least 1 character.'),
   handleValidationErrors
@@ -83,5 +83,68 @@ router.post('/:playlistId', requireAuth, async (req, res, next) => {
 }
 });
 
+router.put('/:playlistId', requireAuth, validatePlaylistEdit, async (req, res, next) => {
+  const { name, previewImage} = req.body;
+  const obj = { name, previewImage };
+  const { user } = req;
+  const { playlistId } = req.params;
+  const setObj = {};
+  const playlist = await Playlist.findByPk(playlistId);
+
+  for (const key in obj) {
+    const element = obj[key];
+    if (element !== undefined) {
+      setObj[key] = element;
+    }
+  }
+  if(playlist) {
+    if(playlist.userId === user.id) {
+      playlist.set(setObj);
+      await playlist.save();
+    } else {
+      const err = new Error("Unauthorized for this resource");
+      err.title = "Forbidden";
+      err.errors = ["Unauthorized for this resource"];
+      err.status = 403;
+      return next(err);
+    }
+  } else {
+      const err = new Error("The requested playlist couldn't be found.");
+      err.title = "Playlist Not Found";
+      err.errors = ["The requested playlist couldn't be found."];
+      err.status = 404;
+      return next(err);
+  }
+
+
+  return res.json({playlist});
+});
+
+router.delete('/:playlistId', requireAuth, async (req, res, next) => {
+  const { user } = req;
+  const { playlistId } = req.params;
+  const playlist = await Playlist.findByPk(playlistId);
+
+
+  if(playlist) {
+    if(playlist.userId === user.id) {
+      await playlist.destroy();
+
+      return res.json({ message: `succesfully deleted playlist: '${playlist.name}' ` });
+    } else {
+      const err = new Error("Unauthorized for this resource");
+      err.title = "Forbidden";
+      err.errors = ["Unauthorized for this resource"];
+      err.status = 403;
+      return next(err);
+    }
+  } else {
+    const err = new Error("The requested playlist couldn't be found.");
+    err.title = "Playlist Not Found";
+    err.errors = ["The requested playlist couldn't be found."];
+    err.status = 404;
+    return next(err);
+}
+});
 
 module.exports = router;
