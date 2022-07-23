@@ -1,26 +1,14 @@
 const express = require('express')
 const router = express.Router();
 
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+
+const { validatePlaylist, validatePlaylistEdit } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Song, Playlist, PlaylistSong } = require('../../db/models');
 
-const validatePlaylist = [
-  check('name')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 1 })
-    .withMessage('Please provide a name with at least 1 character.'),
-  handleValidationErrors
-];
 
-const validatePlaylistEdit = [
-  check('name')
-    .if(check('name').exists())
-    .isLength({ min: 1 })
-    .withMessage('Please provide a name with at least 1 character.'),
-  handleValidationErrors
-];
+
+
 
 router.post('/', requireAuth, validatePlaylist, async (req, res) => {
   const { name, previewImage} = req.body;
