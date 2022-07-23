@@ -117,6 +117,22 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+const validateComment = [
+  check('body')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1 })
+    .withMessage('Please provide a body with at least 1 character.'),
+  handleValidationErrors
+];
+
+const validateCommentEdit = [
+  check('body')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1 })
+    .withMessage('Please provide a body with at least 1 character.'),
+  handleValidationErrors
+];
+
 module.exports = {
   handleValidationErrors,
   validateSong,
@@ -126,5 +142,7 @@ module.exports = {
   validateLogin,
   validatePlaylist,
   validatePlaylistEdit,
-  validateSignup
+  validateSignup,
+  validateComment,
+  validateCommentEdit
 };

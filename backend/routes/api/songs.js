@@ -6,6 +6,9 @@ const { validateSong, validateSongEdit } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Song, Album } = require('../../db/models');
 
+const commentsRouter = require('./comments.js');
+
+
 
 
 
@@ -112,5 +115,11 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
   }
 
 });
+
+router.use('/:songId/comments', (req, res, next) => {
+  req.songId = req.params.songId
+  return next();
+}, commentsRouter);
+
 
 module.exports = router;
