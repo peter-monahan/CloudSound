@@ -21,6 +21,25 @@ router.post('/', validateSignup, async (req, res) => {
   return res.json({...user.toSafeObject(), token});
 });
 
+router.get('/:userId', async (req, res, next) => {
+  const {userId} = req.params;
+  const user = await User.findByPk(userId);
+
+  if(user) {
+    const { id, username, previewImage } = user;
+    const songs = await user.getSongs({attributes: ['previewImage']});
+    const albums = await user.getAlbums();
+
+    res.json({id, username, totalSongs: songs.length, totalAlbums: albums.length, previewImage, songs});
+  } else {
+    const err = new Error("The requested user/artist couldn't be found.");
+    err.title = "User/Artist Not Found";
+    err.errors = ["The requested user/artist couldn't be found."];
+    err.status = 404;
+    return next(err);
+  }
+});
+
 router.get('/:userId/songs', async (req, res, next) => {
   const {userId} = req.params;
   const user = await User.findByPk(userId);
