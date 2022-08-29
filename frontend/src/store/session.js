@@ -39,6 +39,59 @@ export const loginUser = (payload) => async (dispatch) => {
   }
 }
 
+export const restoreUser = () => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch('/api/session');
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user));
+  }
+}
+
+export const signupUser = (payload) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/users`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user));
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
+export const logoutUser = () => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/session`, {
+      method: 'DELETE',
+    });
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    dispatch(removeUser());
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
 
 const initialState = {user: null};
 

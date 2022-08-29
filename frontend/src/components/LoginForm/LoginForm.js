@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { loginUser } from '../../store/session';
 import './LoginForm.css';
 
-const LoginFormPage = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const sessionUser = useSelector(state => state.session.user);
@@ -40,7 +40,7 @@ const LoginFormPage = () => {
         {errors.map((err, i) => <li key={i}>{err}</li>)}
       </ul>
       }
-      <div>
+      <div className='formElement' >
         <label htmlFor="credential">Credential:</label>
         <input
         id='credential'
@@ -49,7 +49,7 @@ const LoginFormPage = () => {
         onChange={e => setCredential(e.target.value)}
         />
       </div>
-      <div>
+      <div className='formElement' >
         <label htmlFor="password">Password:</label>
         <input
         id='password'
@@ -58,9 +58,9 @@ const LoginFormPage = () => {
         onChange={e => setPassword(e.target.value)}
         />
       </div>
-      <button type='submit'>login</button>
+      <button className='formElement' type='submit'>login</button>
     </form>
   );
 }
 
-export default LoginFormPage;
+export default LoginForm;

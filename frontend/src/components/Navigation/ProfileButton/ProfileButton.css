@@ -1,0 +1,9 @@
+.profile-dropdown {
+  position: absolute;
+  border: 2px solid black;
+}
+
+.user-icon {
+  color: #4a4a4a;
+  cursor: pointer;
+}
