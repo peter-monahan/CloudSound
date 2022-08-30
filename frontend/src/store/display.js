@@ -42,7 +42,7 @@ export const getUser = (userId) => async (dispatch) => {
   }
 }
 
-const initialState = {user:{}, song:{}, album:{}, playlist:{}};
+const initialState = {user:null, song:null, album:null, playlist:null};
 
 export default function display (state = initialState, action) {
   let newState = {...state};

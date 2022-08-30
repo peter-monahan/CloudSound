@@ -2,7 +2,7 @@ import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
-import UserPage from "./components/LoginForm/UserPage";
+import UserPage from "./components/UserPage";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -36,7 +36,7 @@ function App() {
         </Route>
 
         <Route path={'/users/:userId'}>
-          <UserPage />
+          <UserPage isLoaded={isLoaded} />
         </Route>
 
       </Switch>

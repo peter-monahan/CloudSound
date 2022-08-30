@@ -40,17 +40,17 @@ function ProfileButton({ user }) {
       {( user.previewImage && user.previewImage.length > 1 && <img src={user.previewImage} onClick={openMenu} className='user-icon-img' />) || <i className="fas fa-user-circle fa-2xl user-icon" onClick={openMenu} />}
 
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>
+        <div className="profile-dropdown">
+          <div>
             <Link to={`/users/${user.id}`}>Profile</Link>
-          </li>
-          <li>
+          </div>
+          <div>
           <Link to={'/settings'}>Settings</Link>
-          </li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+          </div>
+          <div>
+            <p className="logout" onClick={logout}>Log Out</p>
+          </div>
+        </div>
       )}
     </div>
 
