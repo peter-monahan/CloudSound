@@ -1,9 +1,25 @@
 .profile-dropdown {
   position: absolute;
+  top:35px;
+  right: 40px;
   border: 2px solid black;
 }
 
 .user-icon {
   color: #4a4a4a;
   cursor: pointer;
+
+}
+
+.user-icon-img {
+  margin: 0px;
+  width:32px;
+  height:32px;
+  object-fit:cover;
+  border-radius:50%;
+  cursor: pointer;
+}
+
+.profile-button {
+  margin-right: 40px;
 }

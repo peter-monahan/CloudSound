@@ -1,9 +1,52 @@
 .navbar {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content:space-between;
+  align-items:center;
   border-bottom: 2px solid black;
   column-gap: 10px;
   height: 50px;
   margin: 0px;
+
+  text-decoration: none;
 }
+
+.nav-button {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.login {
+  border-left: 1px solid black;
+  border-right: 0px;
+}
+
+.home {
+  margin-left: 15px;
+}
+.nav-group {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-spacer {
+  width: 200px;
+}
+
+/* a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; } */

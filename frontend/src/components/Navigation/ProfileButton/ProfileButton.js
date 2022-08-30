@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../../store/session';
 import './ProfileButton.css';
+import { Link } from "react-router-dom";
 
 
 function ProfileButton({ user }) {
@@ -31,14 +32,18 @@ function ProfileButton({ user }) {
   };
 
   return (
-    <div>
+    <div className="profile-button">
 
-      <i className="fas fa-user-circle fa-xl user-icon" onClick={openMenu} />
+      {( user.previewImage && user.previewImage.length > 1 && <img src={user.previewImage} onClick={openMenu} className='user-icon-img' />) || <i className="fas fa-user-circle fa-2xl user-icon" onClick={openMenu} />}
 
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
+          <li>
+            <Link to={`/users/${user.id}`}>Profile</Link>
+          </li>
+          <li>
+          <Link to={'/settings'}>Settings</Link>
+          </li>
           <li>
             <button onClick={logout}>Log Out</button>
           </li>

@@ -15,8 +15,10 @@ const Navigation = ({isLoaded}) => {
 
   const sessionLinks = (!user &&
     <>
-    <NavLink to={'/login'}>Login</NavLink>
-    <NavLink to={'/signup'}>Signup</NavLink>
+    <div className="nav-group">
+    <NavLink to={'/login'} className="nav-button login">Login</NavLink>
+    <NavLink to={'/signup'} className="nav-button signup">Signup</NavLink>
+    </div>
     </>
   ) || (
     <ProfileButton user={user} />
@@ -24,8 +26,11 @@ const Navigation = ({isLoaded}) => {
 
   return (
     <nav className="navbar">
+      <div className="nav-group">
       <h1>CloudSound</h1>
-      <NavLink to={'/'}>Home</NavLink>
+      <NavLink to={'/'} className="nav-button home">Home</NavLink>
+      </div>
+      <div className="nav-spacer"></div>
       {isLoaded && sessionLinks}
     </nav>
   );
