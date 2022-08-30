@@ -14,7 +14,35 @@ const RESET_ALBUM = "display/RESET_ALBUM";
 
 const RESET = "display/RESET";
 
-const initialState = {};
+export const setUser = (user) => ({
+  type: SET_USER,
+  user
+});
+
+export const resetUser = () => ({
+  type: RESET_USER
+});
+
+
+export const getUser = (userId) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/users/${userId}`);
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user));
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
+const initialState = {user:{}, song:{}, album:{}, playlist:{}};
 
 export default function display (state = initialState, action) {
   let newState = {...state};
