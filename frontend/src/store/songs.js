@@ -32,9 +32,27 @@ export const getSongs = () => async (dispatch) => {
   }
 }
 
+export const getUserSongs = (id) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/users/${id}/songs`);
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const data = await response.json();
+    dispatch(setSongs(data.songs));
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
 const initialState = [];
 
-export default function display (state = initialState, action) {
+export default function songs (state = initialState, action) {
   let newState = [...state];
   switch(action.type){
     case SET_SONGS:
