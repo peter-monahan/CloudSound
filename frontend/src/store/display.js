@@ -42,6 +42,27 @@ export const getUser = (userId) => async (dispatch) => {
   }
 }
 
+export const createSong = (payload) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/users`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user));
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
 const initialState = {user:null, song:null, album:null, playlist:null};
 
 export default function display (state = initialState, action) {

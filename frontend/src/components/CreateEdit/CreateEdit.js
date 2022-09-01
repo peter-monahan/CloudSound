@@ -22,7 +22,7 @@ function CreateEdit() {
       </Link>
 
       <Link className="edit-user edit-item" to={'/edit'}>
-        <i className="fa-solid fa-user-pen fa-xl"></i>
+        <i className="fa-solid fa-user-pen fa-xl edit-user-icon"></i>
       </Link>
     </div>
   );
