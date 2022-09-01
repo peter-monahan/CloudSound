@@ -1,4 +1,9 @@
 .user-songs {
 display: flex;
-column-gap: 20px;
+column-gap: 5px;
+}
+
+.top-user-page {
+  display: flex;
+  align-items: center;
 }

@@ -1,16 +1,17 @@
+import { Link } from 'react-router-dom';
 import './MiniShow.css';
 
 
-function MiniShow ({title, image}) {
+function MiniShow ({title, image, to}) {
 
 
   return (
-    <div className="mini-show">
+    <Link className="mini-show" to={to}>
       <img src={image} className='mini-image'/>
       <div>
         <p>{title}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 
