@@ -1,0 +1,13 @@
+.create-song-form {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid black;
+  border-radius: 9px;
+  background-color: rgb(248, 248, 248);
+}
+.formElement {
+  margin-top: 10px;
+}

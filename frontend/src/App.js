@@ -3,6 +3,7 @@ import Navigation from "./components/Navigation";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserPage from "./components/UserPage";
+import CreateSongForm from "./components/CreateSongForm";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -37,6 +38,10 @@ function App() {
 
         <Route path={'/users/:userId'}>
           <UserPage isLoaded={isLoaded} />
+        </Route>
+
+        <Route path={'/songs/create'}>
+          <CreateSongForm />
         </Route>
 
       </Switch>

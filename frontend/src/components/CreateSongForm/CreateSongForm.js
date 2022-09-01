@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { createSong } from '../../store/display';
 
 import './CreateSongForm.css';
 
@@ -8,6 +9,9 @@ const CreateSongForm = () => {
   const dispatch = useDispatch();
 
   const sessionUser = useSelector(state => state.session.user);
+  const newSong = useSelector(state => state.display.song);
+  const albums = useSelector(state => state.albums);
+
   const [albumId, setAlbumId] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -18,32 +22,43 @@ const CreateSongForm = () => {
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   useEffect(() => {
+    if(sessionUser) {
+      // dispatch(getUserAlbums(sessionUser.id));
+    }
+  }, [dispatch])
+
+  useEffect(() => {
     const errors = [];
 
-    if(title.length < 1 || username.length > 64) errors.push('Please provide a title with between 1-64 characters.');
+    if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
     if(description.length > 255) errors.push('Description must be less than 255 characters.');
     if(!url) errors.push('URL is required');
     setValidationErrors(errors);
   }, [title, description, url])
 
+  if(newSong) {
+    return <Redirect to={`/songs/${newSong.id}`} />;
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     setHasSubmitted(true);
 
-    const payload = {
+    const outerPayload = {
       albumId,
-      title,
-      description,
-      url,
-      previewImage
+      payload: {
+        title,
+        description,
+        url,
+        previewImage
+      }
     }
 
 
     let resErrors;
     if(!validationErrors.length) {
-      resErrors = await dispatch(signupUser(payload));
+      resErrors = await dispatch(createSong(outerPayload));
       if(resErrors) {
         setValidationErrors(resErrors.errors);
       }
@@ -52,75 +67,65 @@ const CreateSongForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='signupForm' >
+    <form onSubmit={onSubmit} className='create-song-form' >
       { validationErrors.length > 0 && hasSubmitted &&
       <ul className='errorBox'>
         {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
       </ul>
       }
       <div className='formElement' >
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="album">Album:</label>
+        <select
+        id='album'
+        value={albumId}
+        onChange={e => setAlbumId(e.target.value)}
+        >
+
+        </select>
+      </div>
+
+      <div className='formElement' >
+        <label htmlFor="title">title:</label>
         <input
-        id='email'
+        id='title'
         type='text'
-        value={email}
+        value={title}
         required
-        onChange={e => setEmail(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="description">description:</label>
         <input
-        id='username'
+        id='description'
         type='text'
-        value={username}
-        required
-        onChange={e => setUsername(e.target.value)}
+        value={description}
+        onChange={e => setDescription(e.target.value)}
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="url">url:</label>
         <input
-        id='firstName'
+        id='url'
         type='text'
-        value={firstName}
-        onChange={e => setFirstName(e.target.value)}
+        value={url}
+        onChange={e => setUrl(e.target.value)}
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="lastName">Last Name:</label>
+        <label htmlFor="previewImage">previewImage:</label>
         <input
-        id='lastName'
+        id='previewImage'
         type='text'
-        value={lastName}
-        onChange={e => setLastName(e.target.value)}
+        value={previewImage}
+        onChange={e => setPreviewImage(e.target.value)}
         />
       </div>
 
-      <div className='formElement' >
-        <label htmlFor="password">Password:</label>
-        <input
-        id='password'
-        type='password'
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        />
-      </div>
-
-      <div className='formElement' >
-        <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input
-        id='confirmPassword'
-        type='password'
-        value={confirmPassword}
-        onChange={e => setConfirmPassword(e.target.value)}
-        />
-      </div>
-
-      <button className='formElement' type='submit'>Signup</button>
+      <button className='formElement' type='submit'>Create Song</button>
 
     </form>
   );

@@ -24,6 +24,15 @@ export const resetUser = () => ({
 });
 
 
+export const setSong = (song) => ({
+  type: SET_SONG,
+  song
+});
+
+export const resetSong = () => ({
+  type: RESET_SONG
+});
+
 export const getUser = (userId) => async (dispatch) => {
   let response;
   try {
@@ -42,20 +51,31 @@ export const getUser = (userId) => async (dispatch) => {
   }
 }
 
-export const createSong = (payload) => async (dispatch) => {
+export const createSong = ({albumId, payload}) => async (dispatch) => {
   let response;
-  try {
-    response = await csrfFetch(`/api/users`, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    response = err;
+  if(albumId) {
+    try {
+      response = await csrfFetch(`/api/albums/${albumId}/songs`, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      response = err;
+    }
+  } else {
+    try {
+      response = await csrfFetch(`/api/songs`, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      response = err;
+    }
   }
 
   if(response.ok) {
-    const user = await response.json();
-    dispatch(setUser(user));
+    const song = await response.json();
+    dispatch(setSong(song));
   } else {
     const error = await response.json();
     console.error(error)
