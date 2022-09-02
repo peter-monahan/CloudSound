@@ -74,8 +74,8 @@ export const createSong = ({albumId, payload}) => async (dispatch) => {
   }
 
   if(response.ok) {
-    const song = await response.json();
-    dispatch(setSong(song));
+    const data = await response.json();
+    dispatch(setSong(data.song));
   } else {
     const error = await response.json();
     console.error(error)

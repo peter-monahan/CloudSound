@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { createSong } from '../../store/display';
+import { createSong, setSong } from '../../store/display';
+import { getUserAlbums } from '../../store/albums';
+import { resetSong } from '../../store/display';
 
 import './CreateSongForm.css';
 
@@ -18,14 +20,16 @@ const CreateSongForm = () => {
   const [url, setUrl] = useState('');
   const [previewImage, setPreviewImage] = useState('');
 
+
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
   useEffect(() => {
     if(sessionUser) {
-      // dispatch(getUserAlbums(sessionUser.id));
+      dispatch(getUserAlbums(sessionUser.id));
     }
-  }, [dispatch])
+    return () => dispatch(resetSong());
+  }, [dispatch, sessionUser])
 
   useEffect(() => {
     const errors = [];
@@ -35,6 +39,15 @@ const CreateSongForm = () => {
     if(!url) errors.push('URL is required');
     setValidationErrors(errors);
   }, [title, description, url])
+
+  useEffect(() => {
+    if(albumId) {
+
+      const album = albums.find(album => album.id === Number(albumId));
+      if(album) setPreviewImage(album.previewImage);
+      console.log('Album img', album.previewImage)
+    }
+  }, [albumId]);
 
   if(newSong) {
     return <Redirect to={`/songs/${newSong.id}`} />;
@@ -49,7 +62,7 @@ const CreateSongForm = () => {
       albumId,
       payload: {
         title,
-        description,
+        description: description.length ? description : undefined,
         url,
         previewImage
       }
@@ -73,19 +86,22 @@ const CreateSongForm = () => {
         {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
       </ul>
       }
-      <div className='formElement' >
+      { albums.length > 0 && <div className='formElement' >
         <label htmlFor="album">Album:</label>
         <select
         id='album'
         value={albumId}
         onChange={e => setAlbumId(e.target.value)}
         >
-
+          <option value=''>None</option>
+          {albums.map(album => (
+            <option value={album.id}>{album.title}</option>
+          ))}
         </select>
-      </div>
+      </div>}
 
       <div className='formElement' >
-        <label htmlFor="title">title:</label>
+        <label htmlFor="title">Song Title:</label>
         <input
         id='title'
         type='text'
@@ -96,7 +112,7 @@ const CreateSongForm = () => {
       </div>
 
       <div className='formElement' >
-        <label htmlFor="description">description:</label>
+        <label htmlFor="description">Description:</label>
         <input
         id='description'
         type='text'
@@ -106,7 +122,7 @@ const CreateSongForm = () => {
       </div>
 
       <div className='formElement' >
-        <label htmlFor="url">url:</label>
+        <label htmlFor="url">Audio Url:</label>
         <input
         id='url'
         type='text'
@@ -115,15 +131,15 @@ const CreateSongForm = () => {
         />
       </div>
 
-      <div className='formElement' >
-        <label htmlFor="previewImage">previewImage:</label>
+      { (!albumId && <div className='formElement' >
+        <label htmlFor="previewImage">Song Image:</label>
         <input
         id='previewImage'
         type='text'
         value={previewImage}
         onChange={e => setPreviewImage(e.target.value)}
         />
-      </div>
+      </div>)}
 
       <button className='formElement' type='submit'>Create Song</button>
 

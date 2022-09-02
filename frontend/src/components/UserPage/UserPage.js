@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { setUser, getUser, resetUser } from "../../store/display";
+import { getUser, resetUser } from "../../store/display";
 import CreateEdit from "../CreateEdit";
 import ItemDetail from "../ItemDetail";
 import MiniShow from "../MiniShow/MiniShow";
@@ -20,6 +20,10 @@ function UserPage ({isLoaded}) {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
+    return () => dispatch(resetUser());
+  }, [])
+
+  useEffect(() => {
     dispatch(getUserSongs(userId));
     dispatch(getUser(userId));
   }, [userId]);
@@ -31,20 +35,9 @@ function UserPage ({isLoaded}) {
     } else {
       setOwned(false);
     }
-    console.log('Owned?', owned);
-    // if(isLoaded) {
-    //   if(sessionUser && sessionUser.id === Number(userId)) {
-    //     dispatch(setUser(sessionUser));
-    //     setOwned(true);
-    //   } else {
-    //     dispatch(getUser(userId));
-    //   }
-    // }
 
-    // return () => {
-    //   dispatch(resetUser());
-    //   setOwned(false);
-    // }
+
+
   }, [sessionUser, userId, displayUser]);
 
   useEffect(() => {
