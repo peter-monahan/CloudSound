@@ -24,8 +24,8 @@ function UserPage ({isLoaded}) {
   }, [])
 
   useEffect(() => {
-    dispatch(getUserSongs(userId));
     dispatch(getUser(userId));
+    dispatch(getUserSongs(userId));
   }, [userId]);
 
   useEffect(() => {

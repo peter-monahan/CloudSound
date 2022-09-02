@@ -16,7 +16,7 @@ function CreateEdit() {
         <i className="fa-solid fa-compact-disc fa-xl create-album-icon"></i>
       </Link>
 
-      <Link className="create-playlist edit-item" to={'/users/4'}>
+      <Link className="create-playlist edit-item" to={'/playlists/create'}>
         <i class="fa-solid fa-plus fa-sm plus"></i>
         <i className="fa-solid fa-list fa-xl create-playlist-icon"></i>
       </Link>

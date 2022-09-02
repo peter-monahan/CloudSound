@@ -51,6 +51,24 @@ export const getUser = (userId) => async (dispatch) => {
   }
 }
 
+export const getSong = (songId) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/songs/${songId}`);
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const song = await response.json();
+    dispatch(setSong(song));
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
 export const createSong = ({albumId, payload}) => async (dispatch) => {
   let response;
   if(albumId) {
