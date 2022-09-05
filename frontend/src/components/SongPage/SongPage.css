@@ -1,0 +1,15 @@
+.song-comments {
+  display: flex;
+  column-gap: 5px;
+  flex-direction: column;
+  }
+
+  .top-song-page {
+    display: flex;
+    align-items: center;
+  }
+
+  .song-detail {
+    display: flex;
+    column-gap: 5px;
+  }

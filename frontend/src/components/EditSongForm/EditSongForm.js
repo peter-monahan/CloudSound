@@ -1,22 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory} from 'react-router-dom';
-import { createSong, resetSong } from '../../store/display';
-import { getUserAlbums } from '../../store/albums';
+import { useParams, useHistory } from 'react-router-dom';
+import { getSong, resetSong, editSong } from '../../store/display';
 
 
-import './CreateSongForm.css';
+import './EditSongForm.css';
 
-const CreateSongForm = () => {
-
+const EditSongForm = () => {
+  const {songId} = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
 
   const sessionUser = useSelector(state => state.session.user);
-  const newSong = useSelector(state => state.display.song);
-  const albums = useSelector(state => state.albums);
+  const song = useSelector(state => state.display.song);
 
-  const [albumId, setAlbumId] = useState(null);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
@@ -31,28 +29,28 @@ const CreateSongForm = () => {
   }, [])
 
   useEffect(() => {
-    if(sessionUser) {
-      dispatch(getUserAlbums(sessionUser.id));
+    dispatch(getSong(songId))
+  }, [songId]);
+
+  useEffect(() => {
+    if(song) {
+      setTitle(song.title);
+      setDescription(song.description);
+      setUrl(song.url);
+      setPreviewImage(song.previewImage);
     }
-  }, [dispatch, sessionUser])
+  }, [song])
 
   useEffect(() => {
     const errors = [];
 
     if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
-    if(description.length > 255) errors.push('Description must be less than 255 characters.');
+    if(description && description.length > 255) errors.push('Description must be less than 255 characters.');
     if(!url) errors.push('URL is required');
     setValidationErrors(errors);
   }, [title, description, url])
 
-  useEffect(() => {
-    if(albumId) {
 
-      const album = albums.find(album => album.id === Number(albumId));
-      if(album) setPreviewImage(album.previewImage);
-      console.log('Album img', album.previewImage)
-    }
-  }, [albumId]);
 
   // if(newSong) {
   //   return <Redirect to={`/songs/${newSong.id}`} />;
@@ -64,10 +62,10 @@ const CreateSongForm = () => {
     setHasSubmitted(true);
 
     const outerPayload = {
-      albumId,
+      songId,
       payload: {
         title,
-        description: description.length ? description : undefined,
+        description: description && description.length ? description : undefined,
         url,
         previewImage
       }
@@ -76,11 +74,11 @@ const CreateSongForm = () => {
 
     let song;
     if(!validationErrors.length) {
-      song = await dispatch(createSong(outerPayload));
+      song = await dispatch(editSong(outerPayload));
       if(song.errors) {
         setValidationErrors(song.errors);
       } else {
-        history.push(`/songs/${song.id}`)
+        history.push(`/songs/${songId}`);
       }
     }
 
@@ -93,19 +91,6 @@ const CreateSongForm = () => {
         {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
       </ul>
       }
-      { albums.length > 0 && <div className='formElement' >
-        <label htmlFor="album">Album:</label>
-        <select
-        id='album'
-        value={albumId}
-        onChange={e => setAlbumId(e.target.value)}
-        >
-          <option value=''>None</option>
-          {albums.map(album => (
-            <option value={album.id}>{album.title}</option>
-          ))}
-        </select>
-      </div>}
 
       <div className='formElement' >
         <label htmlFor="title">Song Title:</label>
@@ -138,7 +123,7 @@ const CreateSongForm = () => {
         />
       </div>
 
-      { (!albumId && <div className='formElement' >
+      { (song && !song.albumId && <div className='formElement' >
         <label htmlFor="previewImage">Song Image:</label>
         <input
         id='previewImage'
@@ -148,10 +133,10 @@ const CreateSongForm = () => {
         />
       </div>)}
 
-      <button className='formElement' type='submit'>Create Song</button>
+      <button className='formElement' type='submit'>Save</button>
 
     </form>
   );
 }
 
-export default CreateSongForm;
+export default EditSongForm;

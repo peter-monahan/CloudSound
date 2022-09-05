@@ -32,7 +32,7 @@ export const getAlbums = () => async (dispatch) => {
   }
 }
 
-export const getUserAlbums= (id) => async (dispatch) => {
+export const getUserAlbums = (id) => async (dispatch) => {
   let response;
   try {
     response = await csrfFetch(`/api/users/${id}/albums`);

@@ -14,6 +14,8 @@ const RESET_ALBUM = "display/RESET_ALBUM";
 
 const RESET = "display/RESET";
 
+
+
 export const setUser = (user) => ({
   type: SET_USER,
   user
@@ -32,6 +34,21 @@ export const setSong = (song) => ({
 export const resetSong = () => ({
   type: RESET_SONG
 });
+
+export const setAlbum = (album) => ({
+  type: SET_ALBUM,
+  album
+});
+
+export const resetAlbum = () => ({
+  type: RESET_ALBUM
+});
+
+export const resetDisplay = () => ({
+  type: RESET
+});
+
+
 
 export const getUser = (userId) => async (dispatch) => {
   let response;
@@ -60,8 +77,27 @@ export const getSong = (songId) => async (dispatch) => {
   }
 
   if(response.ok) {
-    const song = await response.json();
-    dispatch(setSong(song));
+    const data = await response.json();
+    dispatch(setSong(data.song));
+    return data.song;
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
+export const getAlbum = (albumId) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/albums/${albumId}`);
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const data = await response.json();
+    dispatch(setAlbum(data));
   } else {
     const error = await response.json();
     console.error(error)
@@ -94,12 +130,37 @@ export const createSong = ({albumId, payload}) => async (dispatch) => {
   if(response.ok) {
     const data = await response.json();
     dispatch(setSong(data.song));
+    return data.song;
   } else {
     const error = await response.json();
     console.error(error)
     return error;
   }
 }
+
+export const editSong = ({songId, payload}) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/songs/${songId}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+    const data = await response.json();
+    dispatch(setSong(data.song));
+    return data.song;
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
+
+
 
 const initialState = {user:null, song:null, album:null, playlist:null};
 
@@ -118,6 +179,14 @@ export default function display (state = initialState, action) {
       case RESET_SONG:
         newState.song = null;
         return newState;
+      case SET_ALBUM:
+        newState.album = action.album;
+        return newState;
+      case RESET_ALBUM:
+        newState.album = null;
+        return newState;
+      case RESET:
+        return initialState;
     default:
       return state;
   }

@@ -1,0 +1,33 @@
+.item-edit {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+  height: 172px;
+}
+
+.edit-item {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  border-radius: 2px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.pen {
+  position: relative;
+  bottom: 12px;
+  right: 0.5px;
+  color: rgb(0, 0, 0);
+  background-color: white;
+  z-index: 10;
+  height: 16px;
+}
+
+.edit-icon {
+  position: relative;
+  left: 7px;
+  top: 1px
+}

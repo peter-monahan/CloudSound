@@ -4,6 +4,8 @@ import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserPage from "./components/UserPage";
 import CreateSongForm from "./components/CreateSongForm";
+import EditSongForm from "./components/EditSongForm";
+import SongPage from "./components/SongPage";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -36,12 +38,20 @@ function App() {
           <SignupForm />
         </Route>
 
-        <Route path={'/users/:userId'}>
+        <Route exact path={'/users/:userId'}>
           <UserPage isLoaded={isLoaded} />
         </Route>
 
         <Route path={'/songs/create'}>
           <CreateSongForm />
+        </Route>
+
+        <Route exact path={'/songs/:songId'}>
+          <SongPage />
+        </Route>
+
+        <Route path={'/songs/:songId/edit'}>
+          <EditSongForm />
         </Route>
 
       </Switch>
