@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import { setUser, getUser, resetUser } from "../../store/display";
+import { getUser, resetUser } from "../../store/display";
+import CreateEdit from "../CreateEdit";
 import ItemDetail from "../ItemDetail";
+import MiniShow from "../MiniShow/MiniShow";
+import { getUserSongs } from "../../store/songs";
+import { getUserAlbums } from "../../store/albums";
 
 import './UserPage.css';
 
@@ -11,36 +15,39 @@ function UserPage ({isLoaded}) {
   const {userId} = useParams();
   const sessionUser = useSelector(state => state.session.user);
   const displayUser = useSelector(state => state.display.user);
+  const songs = useSelector(state => state.songs);
+  const albums = useSelector(state => state.albums);
 
   const [owned, setOwned] = useState(false);
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    if(isLoaded) {
-      if(sessionUser && sessionUser.id === Number(userId)) {
-        dispatch(setUser(sessionUser));
-        setOwned(true);
-      } else {
-        dispatch(getUser(userId));
-      }
-    }
-
-    return () => {
-      dispatch(resetUser());
-      setOwned(false);
-    }
-  }, [sessionUser, userId, isLoaded]);
+    return () => dispatch(resetUser());
+  }, [])
 
   useEffect(() => {
-    if(isLoaded) {
+    dispatch(getUser(userId));
+    dispatch(getUserSongs(userId));
+    dispatch(getUserAlbums(userId));
+  }, [userId]);
 
-      if(owned && displayUser) {
-        setDetails([displayUser.email]);
-      } else if (displayUser) {
-        setDetails([`Albums: ${displayUser.totalAlbums}`, `Songs: ${displayUser.totalSongs}`])
-      }
+  useEffect(() => {
+
+    if(sessionUser && sessionUser.id === Number(userId)) {
+      setOwned(true);
+    } else {
+      setOwned(false);
     }
-      return () => {
+
+
+
+  }, [sessionUser, userId, displayUser]);
+
+  useEffect(() => {
+    if(displayUser) {
+      setDetails([`Albums: ${displayUser.totalAlbums}`, `Songs: ${displayUser.totalSongs}`]);
+    }
+    return () => {
       setDetails([]);
     }
   }, [displayUser]);
@@ -48,7 +55,24 @@ function UserPage ({isLoaded}) {
 
   return (
     <div className="user-page">
-      {isLoaded && displayUser && <ItemDetail title={displayUser.username} details={details} image={displayUser.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
+      <div className="top-user-page">
+      {displayUser && <ItemDetail title={displayUser.username} details={details} image={displayUser.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
+      {owned && <CreateEdit />}
+      </div>
+      <div className="songs-area">
+        <h3>Songs</h3>
+        <div className="user-songs">
+        {songs.map(song => {
+          return <MiniShow key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+        })}
+        </div>
+      </div>
+      <div className="albums-area">
+        <h3>Albums</h3>
+        {albums.map(album => {
+          return <MiniShow key={album.id} to={`/albums/${album.id}`} title={album.title} image={album.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+        })}
+      </div>
     </div>
   );
 }

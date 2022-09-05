@@ -1,0 +1,43 @@
+.create-edit {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+
+.edit-item {
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  border-radius: 2px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.plus {
+  position: relative;
+  bottom: 12px;
+
+}
+
+.create-music-icon {
+  position: relative;
+  right: 5px;
+}
+
+.create-album-icon {
+  position: relative;
+  right: 4px;
+  top: 1px;
+}
+.create-playlist-icon {
+  position: relative;
+  right: 2px;
+  top: 2px;
+}
+
+.edit-user-icon {
+  position: relative;
+  left: 2px;
+}

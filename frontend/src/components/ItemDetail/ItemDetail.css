@@ -7,4 +7,5 @@
 
 .item-detail {
   display: flex;
+  width: 600px;
 }
