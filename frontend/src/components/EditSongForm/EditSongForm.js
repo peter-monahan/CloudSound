@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { getSong, resetSong, editSong } from '../../store/display';
+import { getSong, resetSong, editSong, deleteSong } from '../../store/display';
 
 
 import './EditSongForm.css';
@@ -55,6 +55,14 @@ const EditSongForm = () => {
   // if(newSong) {
   //   return <Redirect to={`/songs/${newSong.id}`} />;
   // }
+
+  const destroySong = async (e) => {
+    e.preventDefault();
+
+    await dispatch(deleteSong(songId));
+
+    history.push(`/users/${sessionUser.id}`)
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -134,6 +142,7 @@ const EditSongForm = () => {
       </div>)}
 
       <button className='formElement' type='submit'>Save</button>
+      <button onClick={destroySong}>Delete Song</button>
 
     </form>
   );

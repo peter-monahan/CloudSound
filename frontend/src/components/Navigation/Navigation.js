@@ -25,6 +25,7 @@ const Navigation = ({isLoaded}) => {
   )
 
   return (
+    <>
     <nav className="navbar">
       <div className="nav-group">
       <h1>CloudSound</h1>
@@ -33,6 +34,8 @@ const Navigation = ({isLoaded}) => {
       <div className="nav-spacer"></div>
       {isLoaded && sessionLinks}
     </nav>
+    <div className="navbar-placeholder"></div>
+    </>
   );
 }
 

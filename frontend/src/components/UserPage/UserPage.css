@@ -1,6 +1,7 @@
 .user-songs {
 display: flex;
 column-gap: 5px;
+width: 100%;
 }
 
 .top-user-page {

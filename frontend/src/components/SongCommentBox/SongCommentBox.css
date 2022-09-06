@@ -1,0 +1,22 @@
+.comment-box {
+  border: 1px solid black;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.create-comment {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.create-comment-2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-textarea {
+  height: 17px;
+}

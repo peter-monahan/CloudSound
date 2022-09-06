@@ -160,6 +160,26 @@ export const editSong = ({songId, payload}) => async (dispatch) => {
   }
 }
 
+export const deleteSong = (songId) => async (dispatch) => {
+  let response;
+  try {
+    response = await csrfFetch(`/api/songs/${songId}`, {
+      method: 'DELETE'
+    });
+  } catch (err) {
+    response = err;
+  }
+
+  if(response.ok) {
+
+    dispatch(resetSong());
+
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
 
 
 const initialState = {user:null, song:null, album:null, playlist:null};

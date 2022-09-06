@@ -21,8 +21,9 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
+    <>
       <Navigation isLoaded={isLoaded} />
+    <div className="container">
 
       <Switch>
 
@@ -56,6 +57,7 @@ function App() {
 
       </Switch>
     </div>
+    </>
   );
 }
 
