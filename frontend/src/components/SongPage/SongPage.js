@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import ItemDetail from "../ItemDetail";
 import ItemEdit from "../ItemEdit";
-import MiniShow from "../MiniShow/MiniShow";
+import MiniShow from "../MiniShow";
+import SongCommentBox from "../SongCommentBox";
 import { getSong, resetSong } from "../../store/display";
 
 
@@ -65,11 +66,10 @@ function SongPage () {
       {displaySong && <ItemDetail title={displaySong.title} details={details} image={displaySong.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
       {owned && <ItemEdit itemName={'music'} to={`/songs/${songId}/edit`} />}
       </div>
-      {/* <div className="song-comments">
-        {comments.map(song => {
-          return <MiniShow key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
-        })}
-      </div> */}
+      <div className="comments-area">
+      <h3>Comments</h3>
+      <SongCommentBox songId={songId} sessionUser={sessionUser} />
+      </div>
     </div>
   );
 }

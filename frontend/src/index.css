@@ -10,3 +10,17 @@ html, body {
 
 
   }
+
+.container {
+
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}

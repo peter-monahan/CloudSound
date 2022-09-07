@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { signupUser } from '../../store/session';
+import { signupUser, loginUser } from '../../store/session';
 import './SignupForm.css';
 
 const SignupForm = () => {
@@ -41,6 +41,34 @@ const SignupForm = () => {
   if(sessionUser) {
     return <Redirect to='/' />;
   }
+
+
+  const demoUser = async (e) => {
+    e.preventDefault();
+
+
+    let payload;
+    payload = {
+      credential: 'demo-user',
+      password: 'password'
+    }
+
+    let error = await dispatch(loginUser(payload));
+    if(error) {
+      console.error(error);
+      payload = {
+        email: 'demouser@cloudsounds.com',
+        username: 'demo-user',
+        firstName: 'demo',
+        lastName: 'user',
+        password: 'password'
+      }
+
+      const resErrors = await dispatch(signupUser(payload));
+      if(resErrors) console.error(resErrors);
+    }
+  }
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -136,6 +164,7 @@ const SignupForm = () => {
       </div>
 
       <button className='formElement' type='submit'>Signup</button>
+      <button className='formElement' onClick={demoUser}>Login as demo user</button>
 
     </form>
   );

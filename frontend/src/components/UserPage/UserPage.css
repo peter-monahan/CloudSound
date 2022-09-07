@@ -1,9 +1,33 @@
-.user-songs {
-display: flex;
+.user-display-items {
+display:flex;
+flex-wrap: wrap;
+flex-direction: column;
 column-gap: 5px;
+/* width: 300px; */
+overflow-x: auto;
+overflow-y: hidden;
+max-height: 70px;
+border: 1px solid rgba(182, 182, 182, 0.644);
+border-radius: 15px;
+padding: 5px;
 }
 
 .top-user-page {
   display: flex;
   align-items: center;
 }
+
+/* .user-page {
+  width: 100%;
+} */
+
+/* .user-song {
+display: inline;
+} */
+
+/* .songs-area {
+overflow-x: auto;
+overflow-y: hidden;
+display: block;
+width: 600px
+} */

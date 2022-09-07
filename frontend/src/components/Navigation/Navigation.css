@@ -1,4 +1,5 @@
 .navbar {
+  position: fixed;
   display: flex;
   justify-content:space-between;
   align-items:center;
@@ -6,8 +7,15 @@
   column-gap: 10px;
   height: 50px;
   margin: 0px;
-
+  width: 100%;
   text-decoration: none;
+  background-color: aliceblue;
+  z-index: 100;
+}
+.navbar-placeholder {
+  height: 50px;
+  margin: 0px;
+  width: 100%;
 }
 
 .nav-button {
@@ -34,10 +42,7 @@
   height: 100%;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
+
 
 .nav-spacer {
   width: 200px;

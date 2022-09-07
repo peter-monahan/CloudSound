@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import SplashPage from "./components/SplashPage";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserPage from "./components/UserPage";
@@ -21,13 +22,14 @@ function App() {
   }, []);
 
   return (
-    <div className="container">
+    <>
       <Navigation isLoaded={isLoaded} />
+    <div className="container">
 
       <Switch>
 
         <Route exact path={'/'}>
-
+          <SplashPage isLoaded={isLoaded} />
         </Route>
 
         <Route path={'/login'}>
@@ -56,6 +58,7 @@ function App() {
 
       </Switch>
     </div>
+    </>
   );
 }
 

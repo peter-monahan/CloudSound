@@ -5,8 +5,8 @@ import { getUser, resetUser } from "../../store/display";
 import CreateEdit from "../CreateEdit";
 import ItemDetail from "../ItemDetail";
 import MiniShow from "../MiniShow/MiniShow";
-import { getUserSongs } from "../../store/songs";
-import { getUserAlbums } from "../../store/albums";
+import { getUserSongs, resetSongs } from "../../store/songs";
+import { getUserAlbums, resetAlbums } from "../../store/albums";
 
 import './UserPage.css';
 
@@ -22,7 +22,11 @@ function UserPage ({isLoaded}) {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    return () => dispatch(resetUser());
+    return () => {
+      dispatch(resetUser());
+      dispatch(resetSongs());
+      dispatch(resetAlbums());
+    }
   }, [])
 
   useEffect(() => {
@@ -61,17 +65,19 @@ function UserPage ({isLoaded}) {
       </div>
       <div className="songs-area">
         <h3>Songs</h3>
-        <div className="user-songs">
+        <div className="user-display-items">
         {songs.map(song => {
-          return <MiniShow key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+          return <MiniShow className={'user-song'} key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
         })}
         </div>
       </div>
       <div className="albums-area">
         <h3>Albums</h3>
+        <div className="user-display-items">
         {albums.map(album => {
           return <MiniShow key={album.id} to={`/albums/${album.id}`} title={album.title} image={album.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
         })}
+        </div>
       </div>
     </div>
   );
