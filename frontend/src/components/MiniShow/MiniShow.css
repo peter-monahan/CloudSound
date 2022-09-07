@@ -24,7 +24,8 @@
 .mini-show-small {
   display: flex;
   align-items: center;
-  width: 100px;
+  width: max-content;
   height: 25px;
   border: 1px solid black;
+  padding-right: 3px;
 }
