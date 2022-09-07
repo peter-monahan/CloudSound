@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import SplashPage from "./components/SplashPage";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import UserPage from "./components/UserPage";
@@ -28,7 +29,7 @@ function App() {
       <Switch>
 
         <Route exact path={'/'}>
-
+          <SplashPage isLoaded={isLoaded} />
         </Route>
 
         <Route path={'/login'}>
