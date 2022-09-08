@@ -1,0 +1,9 @@
+.top-song-list-page {
+  display: flex;
+  align-items: center;
+}
+
+.song-list-detail {
+  display: flex;
+  column-gap: 5px;
+}

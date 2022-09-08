@@ -7,9 +7,13 @@ import UserPage from "./components/UserPage";
 import CreateSongForm from "./components/CreateSongForm";
 import EditSongForm from "./components/EditSongForm";
 import SongPage from "./components/SongPage";
+import SongListPage from "./components/SongListPage/SongListPage";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { getAlbum, resetAlbum, getPlaylist, resetPlaylist } from "./store/display";
+
+
 import './index.css';
 
 function App() {
@@ -54,6 +58,10 @@ function App() {
 
         <Route path={'/songs/:songId/edit'}>
           <EditSongForm />
+        </Route>
+
+        <Route path={'/albums/:id'}>
+          <SongListPage type={'album'} getItem={getAlbum} resetItem={resetAlbum} iconName={'compact-disc'} />
         </Route>
 
       </Switch>

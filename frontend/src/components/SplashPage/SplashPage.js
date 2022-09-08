@@ -30,7 +30,7 @@ function SplashPage ({isLoaded}) {
   return (
     <div className="splash-page">
       { (isLoaded && !sessionUser) && <div className="welcome-message">
-        <h2>Welcome to CloudSounds!</h2>
+        <h2>Welcome to CloudSound!</h2>
         <p>For the best user experience and to post your own music please login <Link to={'/login'}>here.</Link></p>
         <p>Not signed up yet? Go <Link to={'/signup'}>here.</Link></p>
       </div>}

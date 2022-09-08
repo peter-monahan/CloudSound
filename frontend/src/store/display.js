@@ -97,7 +97,7 @@ export const getAlbum = (albumId) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbum(data));
+    dispatch(setAlbum(data.album));
   } else {
     const error = await response.json();
     console.error(error)
