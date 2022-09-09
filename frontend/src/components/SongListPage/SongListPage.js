@@ -62,11 +62,17 @@ function SongListPage ({type, getItem, resetItem, iconName}) {
     <div className="song-list-page">
       <div className="top-song-list-page">
       {displayItem && <ItemDetail title={displayItem.title} details={details} image={displayItem.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
-      {owned && <ItemEdit itemName={iconName} to={`/${type}/${id}/edit`} />}
+      {/* {owned && <ItemEdit itemName={iconName} to={`/${type}/${id}/edit`} />} */}
       </div>
-      <div className="songs-area">
-
-      </div>
+      <div className="song-list-items">
+        {displayItem && displayItem.Songs && displayItem.Songs.map((song, i) => {
+          return (
+            <div key={song.id} className="song-list-item">
+             {i+1}: <MiniShow className={'user-song'} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+            </div>
+          );
+        })}
+        </div>
     </div>
   );
 }

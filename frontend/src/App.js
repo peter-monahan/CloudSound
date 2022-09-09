@@ -8,6 +8,7 @@ import CreateSongForm from "./components/CreateSongForm";
 import EditSongForm from "./components/EditSongForm";
 import SongPage from "./components/SongPage";
 import SongListPage from "./components/SongListPage/SongListPage";
+import CreateAlbumForm from "./components/CreateAlbumForm";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -58,6 +59,10 @@ function App() {
 
         <Route path={'/songs/:songId/edit'}>
           <EditSongForm />
+        </Route>
+
+        <Route path={'/albums/create'}>
+          <CreateAlbumForm />
         </Route>
 
         <Route path={'/albums/:id'}>
