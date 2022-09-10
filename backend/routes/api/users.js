@@ -56,7 +56,7 @@ router.get('/:userId/songs', async (req, res, next) => {
   }
 });
 
-router.get('/:userId/playlists', requireAuth, async (req, res, next) => {
+router.get('/:userId/playlists', async (req, res, next) => {
   const {userId} = req.params;
   const user = await User.findByPk(userId);
 
@@ -72,7 +72,7 @@ router.get('/:userId/playlists', requireAuth, async (req, res, next) => {
   }
 });
 
-router.get('/:userId/albums', requireAuth, async (req, res, next) => {
+router.get('/:userId/albums', async (req, res, next) => {
   const {userId} = req.params;
   const user = await User.findByPk(userId);
 

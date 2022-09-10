@@ -9,6 +9,7 @@ import EditSongForm from "./components/EditSongForm";
 import SongPage from "./components/SongPage";
 import SongListPage from "./components/SongListPage/SongListPage";
 import CreateAlbumForm from "./components/CreateAlbumForm";
+import Footer from "./components/Footer";
 import { restoreUser } from "./store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -71,6 +72,7 @@ function App() {
 
       </Switch>
     </div>
+    <Footer />
     </>
   );
 }
