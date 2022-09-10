@@ -29,11 +29,14 @@ function SplashPage ({isLoaded}) {
   }, []);
   return (
     <div className="splash-page">
-      { (isLoaded && !sessionUser) && <div className="welcome-message">
-        <h2>Welcome to CloudSounds!</h2>
-        <p>For the best user experience and to post your own music please login <Link to={'/login'}>here.</Link></p>
-        <p>Not signed up yet? Go <Link to={'/signup'}>here.</Link></p>
-      </div>}
+      { isLoaded && ( (!sessionUser && <div className="welcome-message">
+        <h2>Welcome to CloudSound!</h2>
+        <p>For the best user experience and to post your own music please login <Link className="splash-link" to={'/login'}>here.</Link></p>
+        <p>Not signed up yet? Go <Link className="splash-link" to={'/signup'}>here.</Link></p>
+      </div>) || (sessionUser && <div className="welcome-message">
+        <h2>Welcome to CloudSound!</h2>
+        <p>To get started creating your own music go <Link className="splash-link" to={`/users/${sessionUser.id}`}>here.</Link></p>
+      </div>) )}
         <div className="songs-area">
           <h3> Popular Songs</h3>
           <div className="all-songs display-items">

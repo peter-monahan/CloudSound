@@ -45,9 +45,6 @@ function ProfileButton({ user }) {
             <Link to={`/users/${user.id}`}>Profile</Link>
           </div>
           <div>
-          <Link to={'/settings'}>Settings</Link>
-          </div>
-          <div>
             <p className="logout" onClick={logout}>Log Out</p>
           </div>
         </div>

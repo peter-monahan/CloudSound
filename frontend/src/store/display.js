@@ -97,7 +97,7 @@ export const getAlbum = (albumId) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbum(data));
+    dispatch(setAlbum(data.album));
   } else {
     const error = await response.json();
     console.error(error)
@@ -181,6 +181,28 @@ export const deleteSong = (songId) => async (dispatch) => {
   }
 }
 
+export const createAlbum = (payload) => async (dispatch) => {
+  let response;
+    try {
+      response = await csrfFetch(`/api/albums`, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      response = err;
+    }
+
+
+  if(response.ok) {
+    const data = await response.json();
+    dispatch(setAlbum(data.album));
+    return data.album;
+  } else {
+    const error = await response.json();
+    console.error(error)
+    return error;
+  }
+}
 
 const initialState = {user:null, song:null, album:null, playlist:null};
 
