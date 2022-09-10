@@ -1,5 +1,37 @@
 # CloudSound
 
+## Setup
+
+1. Clone the project
+2. `cd` into the project root folder and run `npm install`
+3. `cd` into the backend folder and rename the `.env.example` to `.env` and change the `JWT_SECRET` if desired
+4. While in the backend run:
+```
+dotenv npx sequelize db:migrate
+dotenv npx sequelize db:seed:all
+```
+5. While still in the backend and once the database is properly migrated and seeded run `npm start`
+6. In a seperate terminal cd into the frontend folder and run `npm start`
+
+---
+## Features
+
+* Signup
+* Login
+* Logout
+* Songs
+  * Songs can be viewed on the splash page, ablum pages, and user pages
+  * Song details can be viewed on that songs page
+  * Songs can be created from the users profile page
+  * Songs can be updated and deleted from that songs page
+* Comments
+  * Comments can be viewed, created, updated, and deleted on a songs page
+* Albums
+  * Albums can be viewed on the splash page, and user pages
+  * Album details can be viewed on that albums page
+  * Albums can be created from the users profile page
+
+---
 ## Database Schema Design
 
 ![db-schema]
