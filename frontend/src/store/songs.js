@@ -193,6 +193,9 @@ export default function songs (state = initialState, action) {
     case SET_SONGS:
       newState = action.songs;
       return newState;
+    case SET_SONG:
+      newState[action.song.id] = action.song;
+      return newState;
     case RESET_SONGS:
        newState = {};
       return newState;

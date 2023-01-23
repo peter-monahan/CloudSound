@@ -1,0 +1,33 @@
+.mini-image-medium {
+  margin: 0px;
+  width:40px;
+  height:40px;
+  object-fit:cover;
+}
+
+.mini-show-medium {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: rgb(241, 246, 250);
+}
+
+.mini-image-small {
+  margin: 0px;
+  width:20px;
+  height:20px;
+  object-fit:cover;
+}
+
+.mini-show-small {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 25px;
+  border: 1px solid black;
+  padding-right: 3px;
+  background-color: rgb(241, 246, 250);
+}

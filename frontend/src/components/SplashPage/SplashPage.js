@@ -5,6 +5,8 @@ import { getSongs, resetSongs } from "../../store/songs";
 import { getAlbums, resetAlbums } from "../../store/albums";
 import './SplashPage.css';
 import { Link } from "react-router-dom";
+import SongMiniShow from "../SongMiniShow";
+import AlbumMiniShow from "../AlbumMiniShow";
 
 
 function SplashPage ({isLoaded}) {
@@ -14,13 +16,13 @@ function SplashPage ({isLoaded}) {
   const albums = useSelector(state => state.albums);
   const sessionUser = useSelector(state => state.session.user);
 
-  useEffect(() => {
-    return () => {
-      // dispatch(resetArtists());
-      dispatch(resetSongs());
-      dispatch(resetAlbums());
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     // dispatch(resetArtists());
+  //     dispatch(resetSongs());
+  //     dispatch(resetAlbums());
+  //   }
+  // }, [])
 
   useEffect(() => {
     dispatch(getSongs());
@@ -41,7 +43,7 @@ function SplashPage ({isLoaded}) {
           <h3> Popular Songs</h3>
           <div className="all-songs display-items">
           {Object.values(songs).map(song => {
-            return <MiniShow className={'splash-song'} key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+            return <SongMiniShow className={'splash-song'} key={song.id} song={song}/>
           })}
           </div>
         </div>
@@ -50,7 +52,7 @@ function SplashPage ({isLoaded}) {
           <h3>Popular Albums</h3>
           <div className="all-albums display-items">
           {Object.values(albums).map(album => {
-            return <MiniShow className={'splash-album'} key={album.id} to={`/albums/${album.id}`} title={album.title} image={album.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+            return <AlbumMiniShow className={'splash-album'} key={album.id} album={album}/>
           })}
           </div>
         </div>

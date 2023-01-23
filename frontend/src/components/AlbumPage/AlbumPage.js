@@ -5,30 +5,31 @@ import ItemDetail from "../ItemDetail";
 import ItemEdit from "../ItemEdit";
 import MiniShow from "../MiniShow";
 // import { getAlbum, resetAlbum } from "../../store/display";
+import { getAlbum } from "../../store/albums";
 
 
 
 
-import './SongListPage.css';
+import './AlbumPage.css';
 
-function SongListPage ({type, getItem, resetItem, iconName}) {
+function AlbumPage ({type, iconName}) {
   const dispatch = useDispatch();
   const {id} = useParams();
 
   const sessionUser = useSelector(state => state.session.user);
-  const displayItem = useSelector(state => state.display[type]);
+  const displayItem = useSelector(state => state[type][id]);
 
 
   const [owned, setOwned] = useState(false);
   const [details, setDetails] = useState([]);
 
 
-  useEffect(() => {
-        return () => dispatch(resetItem());
-  }, []);
+  // useEffect(() => {
+  //       return () => dispatch(resetItem());
+  // }, []);
 
   useEffect(  () => {
-    dispatch(getItem(id));
+    dispatch(getAlbum(id));
   }, [id]);
 
   useEffect(() => {
@@ -77,4 +78,4 @@ function SongListPage ({type, getItem, resetItem, iconName}) {
   );
 }
 
-export default SongListPage;
+export default AlbumPage;

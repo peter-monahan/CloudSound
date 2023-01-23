@@ -1,0 +1,25 @@
+.music-bar {
+  position:fixed;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  border-top: 2px solid black;
+  column-gap: 10px;
+  height: 100px;
+  margin: 0px;
+  width: 100%;
+  text-decoration: none;
+  background-color: aliceblue;
+  z-index: 110;
+}
+
+.music-bar-button {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  box-sizing: border-box;
+}
