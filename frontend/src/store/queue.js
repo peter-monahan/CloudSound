@@ -63,7 +63,13 @@ export const prevSong = () => {
   }
 };
 
-const initialState = {head: null, tail: null, current: null, nodes: {}, repeat: false, isPlaying: false};
+export const togglePlayback = () => {
+  return {
+    type: TOGGLE_PLAYBACK,
+  }
+};
+
+const initialState = {head: null, tail: null, current: null, nodes: {}, repeat: false, isPlaying: false, nextId: 0};
 
 //music REDUCER
 export default function reducer(state = initialState, action) {
@@ -73,25 +79,28 @@ export default function reducer(state = initialState, action) {
 
       let next = null;
       let prev = null;
+      let newId = newState.nextId;
+      newState.nextId++;
       if(newState.current === null) {
-        newState.head = action.song.id;
-        newState.tail = action.song.id;
-        newState.current = action.song.id;
+        newState.head = newId;
+        newState.tail = newId;
+        newState.current = newId;
       } else if(newState.current === newState.tail || action.position.toUpperCase() === "END") {
         prev = newState.tail;
-        newState.nodes[newState.tail].next = action.song.id;
-        newState.tail = action.song.id;
+        newState.nodes[newState.tail].next = newId;
+        newState.tail = newId;
       } else {
         const curr = newState.nodes[newState.current];
         prev = curr.id;
         next = curr.next;
-        curr.next = action.song.id;
-        newState.nodes[next].prev = action.song.id;
+        curr.next = newId;
+        newState.nodes[next].prev = newId;
       }
       if(action.position.toUpperCase() === "CURRENT") {
-        newState.current = action.song.id;
+        newState.current = newId;
+        newState.isPlaying = true;
       }
-      newState.nodes[action.song.id] = {song: action.song, id: action.song.id, next, prev}
+      newState.nodes[newId] = {song: action.song, id: newId, next, prev}
 
       return newState;
     } case ADD_LIST_TO_QUEUE: {
@@ -104,7 +113,7 @@ export default function reducer(state = initialState, action) {
       return newState;
     } case CLEAR_QUEUE: {
 
-      return {...initialState, repeat: newState.repeat};
+      return {head: null, tail: null, current: null, nodes: {}, repeat: newState.repeat, isPlaying: false, nextId: 0};
     } case NEXT_SONG: {
 
       let next = newState.nodes[newState.current].next;
@@ -115,7 +124,7 @@ export default function reducer(state = initialState, action) {
           newState.isPlaying = false;
         }
       } else {
-        newState.current = next.id;
+        newState.current = next;
       }
       return newState;
     } case PREV_SONG: {
@@ -124,13 +133,16 @@ export default function reducer(state = initialState, action) {
       if(prev === null) {
         newState.current = newState.tail;
       } else {
-        newState.current = prev.id;
+        newState.current = prev;
       }
       return newState;
     } case TOGGLE_REPEAT: {
 
       newState.repeat = !newState.repeat;
       return newState;
+    } case TOGGLE_PLAYBACK: {
+      newState.isPlaying = !newState.isPlaying;
+      return newState
     }
     default:
       return state;

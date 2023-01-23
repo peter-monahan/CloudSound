@@ -74,7 +74,7 @@ function App() {
 
       </Switch>
     </div>
-    {Object.keys(queue.nodes).length > -1 && <MusicBar />}
+    {Object.keys(queue.nodes).length > 0 && <MusicBar />}
     <Footer />
     </>
   );
