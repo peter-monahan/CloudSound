@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory} from 'react-router-dom';
-import { createSong, resetSong } from '../../store/display';
+import { createSong } from '../../store/songs';
 import { getUserAlbums } from '../../store/albums';
 
 
@@ -19,16 +19,16 @@ const CreateSongForm = () => {
   const [albumId, setAlbumId] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [url, setUrl] = useState('');
+  const [audio, setAudio] = useState('');
   const [previewImage, setPreviewImage] = useState('');
 
 
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
-  useEffect(() => {
-    return () => dispatch(resetSong());
-  }, [])
+  // useEffect(() => {
+  //   return () => dispatch(resetSong());
+  // }, [])
 
   useEffect(() => {
     if(sessionUser) {
@@ -41,9 +41,9 @@ const CreateSongForm = () => {
 
     if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
     if(description.length > 255) errors.push('Description must be less than 255 characters.');
-    if(!url) errors.push('URL is required');
+    if(!audio) errors.push('Audio is required');
     setValidationErrors(errors);
-  }, [title, description, url])
+  }, [title, description, audio])
 
   useEffect(() => {
     if(albumId) {
@@ -68,7 +68,7 @@ const CreateSongForm = () => {
       payload: {
         title,
         description: description.length ? description : undefined,
-        url,
+        audio,
         previewImage
       }
     }
@@ -85,6 +85,11 @@ const CreateSongForm = () => {
     }
 
   }
+
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setAudio(file);
+  };
 
   return (
     <form onSubmit={onSubmit} className='create-song-form' >
@@ -129,12 +134,11 @@ const CreateSongForm = () => {
       </div>
 
       <div className='formElement' >
-        <label htmlFor="url">Audio Url:</label>
+        <label htmlFor="audio">Audio File:</label>
         <input
-        id='url'
-        type='text'
-        value={url}
-        onChange={e => setUrl(e.target.value)}
+        id='audio'
+        type='file'
+        onChange={updateFile}
         />
       </div>
 

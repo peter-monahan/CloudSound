@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { getSong, resetSong, editSong, deleteSong } from '../../store/display';
+import { getSong, editSong, deleteSong } from '../../store/songs';
 
 
 import './EditSongForm.css';
@@ -24,9 +24,9 @@ const EditSongForm = () => {
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
-  useEffect(() => {
-    return () => dispatch(resetSong());
-  }, [])
+  // useEffect(() => {
+  //   return () => dispatch(resetSong());
+  // }, [])
 
   useEffect(() => {
     dispatch(getSong(songId))

@@ -7,6 +7,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Song, Album } = require('../../db/models');
 
 const commentsRouter = require('./comments.js');
+const { singleMulterUpload, singlePublicFileUpload } = require('../../awsS3');
 
 
 
@@ -15,16 +16,20 @@ const commentsRouter = require('./comments.js');
 router.get('/', async (req, res) => {
   const songs = await Song.findAll();
 
-  return res.json({songs});
+  return res.json(songs.reduce((obj, el) => {
+    obj[el.id] = el;
+    return obj;
+  }, {}));
 });
 
-router.post('/', requireAuth, validateSong, async (req, res) => {
-  const { title, description, url, previewImage } = req.body;
+router.post('/', requireAuth, singleMulterUpload('audio'), validateSong, async (req, res) => {
+  const { title, description, previewImage} = req.body;
+  const url = await singlePublicFileUpload(req.file);
   const { user } = req;
 
   const song = await user.createSong({title, description, url, previewImage});
 
-  return res.json({song});
+  return res.json(song);
 });
 
 router.get('/:songId', async (req, res, next) => {
@@ -41,7 +46,7 @@ router.get('/:songId', async (req, res, next) => {
     }
   ]});
   if(song) {
-    return res.json({song});
+    return res.json(song);
   } else {
     const err = new Error("The requested song couldn't be found.");
     err.title = "Song Not Found";
@@ -85,7 +90,7 @@ router.put('/:songId', requireAuth, validateSongEdit, async (req, res, next) => 
   }
 
 
-  return res.json({song});
+  return res.json(song);
 });
 
 router.delete('/:songId', requireAuth, async (req, res, next) => {

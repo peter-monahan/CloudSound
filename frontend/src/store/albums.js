@@ -24,7 +24,7 @@ export const getAlbums = () => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbums(data.albums));
+    dispatch(setAlbums(data));
   } else {
     const error = await response.json();
     console.error(error)
@@ -42,7 +42,7 @@ export const getUserAlbums = (id) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbums(data.albums));
+    dispatch(setAlbums(data));
   } else {
     const error = await response.json();
     console.error(error)
@@ -50,16 +50,16 @@ export const getUserAlbums = (id) => async (dispatch) => {
   }
 }
 
-const initialState = [];
+const initialState = {};
 
 export default function albums(state = initialState, action) {
-  let newState = [...state];
+  let newState = {...state};
   switch(action.type){
     case SET_ALBUMS:
       newState = action.albums;
       return newState;
       case RESET_ALBUMS:
-        newState = [];
+        newState = {};
         return newState;
     default:
       return state;

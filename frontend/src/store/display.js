@@ -6,7 +6,7 @@ const RESET_USER = "display/RESET_USER";
 const SET_PLAYLIST = "display/SET_PLAYLIST";
 const RESET_PLAYLIST = "display/RESET_PLAYLIST";
 
-const SET_SONG = "display/SET_SONG";
+
 const RESET_SONG = "display/RESET_SONG";
 
 const SET_ALBUM = "display/SET_ALBUM";
@@ -26,14 +26,9 @@ export const resetUser = () => ({
 });
 
 
-export const setSong = (song) => ({
-  type: SET_SONG,
-  song
-});
 
-export const resetSong = () => ({
-  type: RESET_SONG
-});
+
+
 
 export const setAlbum = (album) => ({
   type: SET_ALBUM,
@@ -68,24 +63,7 @@ export const getUser = (userId) => async (dispatch) => {
   }
 }
 
-export const getSong = (songId) => async (dispatch) => {
-  let response;
-  try {
-    response = await csrfFetch(`/api/songs/${songId}`);
-  } catch (err) {
-    response = err;
-  }
 
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setSong(data.song));
-    return data.song;
-  } else {
-    const error = await response.json();
-    console.error(error)
-    return error;
-  }
-}
 
 export const getAlbum = (albumId) => async (dispatch) => {
   let response;
@@ -97,7 +75,7 @@ export const getAlbum = (albumId) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbum(data.album));
+    dispatch(setAlbum(data));
   } else {
     const error = await response.json();
     console.error(error)
@@ -105,81 +83,7 @@ export const getAlbum = (albumId) => async (dispatch) => {
   }
 }
 
-export const createSong = ({albumId, payload}) => async (dispatch) => {
-  let response;
-  if(albumId) {
-    try {
-      response = await csrfFetch(`/api/albums/${albumId}/songs`, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      response = err;
-    }
-  } else {
-    try {
-      response = await csrfFetch(`/api/songs`, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      response = err;
-    }
-  }
 
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setSong(data.song));
-    return data.song;
-  } else {
-    const error = await response.json();
-    console.error(error)
-    return error;
-  }
-}
-
-export const editSong = ({songId, payload}) => async (dispatch) => {
-  let response;
-  try {
-    response = await csrfFetch(`/api/songs/${songId}`, {
-      method: 'PUT',
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    response = err;
-  }
-
-  if(response.ok) {
-    const data = await response.json();
-    dispatch(setSong(data.song));
-    return data.song;
-  } else {
-    const error = await response.json();
-    console.error(error)
-    return error;
-  }
-}
-
-export const deleteSong = (songId) => async (dispatch) => {
-  let response;
-  try {
-    response = await csrfFetch(`/api/songs/${songId}`, {
-      method: 'DELETE'
-    });
-  } catch (err) {
-    response = err;
-  }
-
-  if(response.ok) {
-
-    dispatch(resetSong());
-
-  } else {
-    const error = await response.json();
-    console.error(error)
-    return error;
-  }
-}
 
 export const createAlbum = (payload) => async (dispatch) => {
   let response;
@@ -195,8 +99,8 @@ export const createAlbum = (payload) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setAlbum(data.album));
-    return data.album;
+    dispatch(setAlbum(data));
+    return data;
   } else {
     const error = await response.json();
     console.error(error)
@@ -215,9 +119,6 @@ export default function display (state = initialState, action) {
     case RESET_USER:
       newState.user = null;
       return newState;
-      case SET_SONG:
-        newState.song = action.song;
-        return newState;
       case RESET_SONG:
         newState.song = null;
         return newState;

@@ -26,9 +26,6 @@ const validateSong = [
     .if(check('description').exists())
     .isLength({ min: 1 })
     .withMessage('A description must have at least 1 character.'),
-  check('url')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a url for the audio'),
   handleValidationErrors
 ];
 

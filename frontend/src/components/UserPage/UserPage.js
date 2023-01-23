@@ -66,7 +66,7 @@ function UserPage ({isLoaded}) {
       <div className="songs-area">
         <h3>Songs</h3>
         <div className="user-display-items">
-        {songs.map(song => {
+        {Object.values(songs).map(song => {
           return <MiniShow className={'user-song'} key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
         })}
         </div>
@@ -74,7 +74,7 @@ function UserPage ({isLoaded}) {
       <div className="albums-area">
         <h3>Albums</h3>
         <div className="user-display-items">
-        {albums.map(album => {
+        {Object.values(albums).map(album => {
           return <MiniShow key={album.id} to={`/albums/${album.id}`} title={album.title} image={album.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
         })}
         </div>

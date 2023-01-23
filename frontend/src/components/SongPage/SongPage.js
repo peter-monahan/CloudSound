@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import ItemDetail from "../ItemDetail";
 import ItemEdit from "../ItemEdit";
 import MiniShow from "../MiniShow";
 import SongCommentBox from "../SongCommentBox";
-import { getSong, resetSong } from "../../store/display";
+import { getSong } from "../../store/songs";
 
 
 
@@ -15,9 +15,9 @@ import './SongPage.css';
 function SongPage () {
   const dispatch = useDispatch();
   const {songId} = useParams();
-
+  const audioElement = useRef(null);
   const sessionUser = useSelector(state => state.session.user);
-  const displaySong = useSelector(state => state.display.song);
+  const displaySong = useSelector(state => state.songs[songId]);
   // const displayUser = useSelector(state => state.display.user);
   // const displayAlbum = useSelector(state => state.display.album);
   // const comments = useSelector(state => state.comments);
@@ -26,9 +26,9 @@ function SongPage () {
   const [details, setDetails] = useState([]);
 
 
-  useEffect(() => {
-    return () => dispatch(resetSong());
-  }, []);
+  // useEffect(() => {
+  //   return () => dispatch(resetSong());
+  // }, []);
 
   useEffect(  () => {
     dispatch(getSong(songId));
@@ -66,6 +66,11 @@ function SongPage () {
       {displaySong && <ItemDetail title={displaySong.title} details={details} image={displaySong.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
       {owned && <ItemEdit itemName={'music'} to={`/songs/${songId}/edit`} />}
       </div>
+      <audio
+          src={displaySong?.url}
+          ref={audioElement}
+          controls={true}
+      ></audio>
       <div className="comments-area">
       <h3>Comments</h3>
       <SongCommentBox songId={songId} sessionUser={sessionUser} />
