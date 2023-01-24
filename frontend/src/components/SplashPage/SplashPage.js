@@ -31,16 +31,16 @@ function SplashPage ({isLoaded}) {
   }, []);
   return (
     <div className="splash-page">
-      { isLoaded && ( (!sessionUser && <div className="welcome-message">
+      {/* { isLoaded && ( (!sessionUser && <div className="welcome-message">
         <h2>Welcome to CloudSound!</h2>
         <p>For the best user experience and to post your own music please login <Link className="splash-link" to={'/login'}>here.</Link></p>
         <p>Not signed up yet? Go <Link className="splash-link" to={'/signup'}>here.</Link></p>
       </div>) || (sessionUser && <div className="welcome-message">
         <h2>Welcome to CloudSound!</h2>
         <p>To get started creating your own music go <Link className="splash-link" to={`/users/${sessionUser.id}`}>here.</Link></p>
-      </div>) )}
+      </div>) )} */}
         <div className="songs-area">
-          <h3> Popular Songs</h3>
+          <h3>Songs</h3>
           <div className="all-songs display-items">
           {Object.values(songs).map(song => {
             return <SongMiniShow className={'splash-song'} key={song.id} song={song}/>
@@ -49,7 +49,7 @@ function SplashPage ({isLoaded}) {
         </div>
 
         <div className="albums-area">
-          <h3>Popular Albums</h3>
+          <h3>Albums</h3>
           <div className="all-albums display-items">
           {Object.values(albums).map(album => {
             return <AlbumMiniShow className={'splash-album'} key={album.id} album={album}/>

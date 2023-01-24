@@ -5,13 +5,13 @@
   flex-direction: column;
   justify-content: center;
   align-items:center;
-  border-top: 2px solid black;
+  border-top: 2px solid rgba(133, 162, 255, 0.726);
   column-gap: 10px;
   height: 100px;
   margin: 0px;
   width: 100%;
   text-decoration: none;
-  background-color: aliceblue;
+  background-color: rgb(204, 242, 255);
   z-index: 110;
 }
 
@@ -23,7 +23,7 @@
   margin: 0px;
   width: 100%;
   text-decoration: none;
-  background-color: aliceblue;
+  background-color: rgb(204, 242, 255);
 }
 .music-top {
   width: 100%;
@@ -31,9 +31,9 @@
   align-items: center;
   justify-content: center;
 }
-.time-bar {
+/* .time-bar {
   width: 90%;
-}
+} */
 .music-bar-button {
   border-left: 1px solid black;
   border-right: 1px solid black;
@@ -42,4 +42,31 @@
   align-items: center;
   padding: 3px;
   box-sizing: border-box;
+}
+
+.music-bar input[type="range"] {
+  /* -webkit-appearance: none;
+  appearance: none; */
+  /* background: orange; */
+  cursor: pointer;
+  width: 90%;
+}
+
+.music-bar button {
+  border-radius: 50%;
+  background-color: transparent;
+  /* margin: 2px; */
+  /* padding-left: 15px;
+  padding-right: 15px; */
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  /* color: white; */
+  border: none;
+}
+
+.music-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

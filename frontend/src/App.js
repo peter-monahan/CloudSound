@@ -14,7 +14,7 @@ import { restoreUser } from "./store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getAlbum, resetAlbum, getPlaylist, resetPlaylist } from "./store/display";
-
+import image from'./images/vecteezy_illustration-cute-sky-clouds-beautiful-stylish-isolated-blue_15276835.jpg'
 
 import './index.css';
 import MusicBar from "./components/MusicBar/MusicBar";
@@ -32,7 +32,8 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-    <div className="container">
+    <div className="container" style={{backgroundImage: "url(/images/vecteezy_illustration-cute-sky-clouds-beautiful-stylish-isolated-blue_15276835.jpg)",        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',}}>
 
       <Switch>
 

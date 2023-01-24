@@ -6,7 +6,9 @@ column-gap: 5px;
 /* width: 300px; */
 overflow-x: auto;
 overflow-y: hidden;
-max-height: 70px;
+min-height: 110px;
+max-height: 125px;
+
 border: 1px solid rgba(182, 182, 182, 0.644);
 border-radius: 15px;
 padding: 5px;

@@ -7,8 +7,8 @@ html, body {
 
   padding:0;
 
-
-
+  color: rgb(204, 242, 255);
+  text-shadow: 1px 1px 2px black;
   }
 
 .container {
@@ -23,5 +23,49 @@ html, body {
 
 a {
   text-decoration: none;
-  color: black;
+  color: rgb(204, 242, 255);
+}
+body {
+  padding: 0px;
+  margin: 0px;
+  /* padding-left: 130px;
+  background-color: #312e2b;
+  color: white; */
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+/* button {
+  border-radius: 20px;
+  background-color: rgb(214, 214, 214);
+  margin: 2px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+  color: white;
+  border: 1px solid black;
+} */
+
+/* button:disabled {
+  background-color: rgb(132, 124, 118);
+  color: rgb(185, 185, 185);
+  cursor: default;
+} */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 123, 172, 0.605) rgba(42, 104, 196, 0.753);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 123, 172, 0.411);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(204, 242, 255);
+  border-radius: 20px;
+  border: 3px solid rgba(167, 198, 244, 0.753);
 }
