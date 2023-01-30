@@ -10,7 +10,11 @@ const { User, Song, Album } = require('../../db/models');
 
 
 router.get('/', async (req, res) => {
-  const albums = await Album.findAll();
+  const albums = await Album.findAll({include: [
+    {
+      model: Song,
+    }
+  ]});
 
   return res.json(albums.reduce((obj, el) => {obj[el.id] = el; return obj}, {}));
 });

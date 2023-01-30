@@ -5,50 +5,51 @@ const { User, Song, Playlist } = require('../models');
 
 const songComments = [
   {
-    username: 'PintsWithAquinas',
+    username: 'WhistlingThistle',
     songs: [
-      {title: 'Trees'},
-      {title: "Beer's in the Laundry"},
-      {title: 'SomeRealGoodStuff'},
-      {title: 'Bogdanowicz: Holy Mary, Mother Of God'},
-      {title: 'Keating: Te Deum'},
+      {title: 'Blue and Gold'},
+      {title: "Mac n\' cheese with hot sauce"},
+      {title: 'Broken phone in Brazil'},
+      {title: 'Gaudete Sunday'},
+      // {title: 'Keating: Te Deum'},
     ],
     comment: { body: 'I love this song!!!!'}
   },
   {
     username: 'LittleFlower',
     songs: [
-      {title: 'Trees'},
-      {title: 'Formidable'},
+      {title: 'Wayfaring'},
+      {title: 'We met at Chick-fil-A'},
+      {title: 'Blue and Gold'},
     ],
     comment: { body: 'Very nice'}
   },
   {
-    username: 'JDeezle',
+    username: 'Nostalgia',
     songs: [
-      {title: 'Trees'},
-      {title: "Emma's Playing Zelda"},
-      {title: 'Morph'},
-      {title: 'SomeRealGoodStuff'},
+      {title: 'Gaudete Sunday'},
+      {title: "Mac n\' cheese with hot sauce"},
+      {title: 'Groundhog Day'},
+      // {title: 'SomeRealGoodStuff'},
     ],
     comment: { body: 'Mood'}
 
   },
   {
-    username: 'TOP',
+    username: 'lilGuy',
     songs: [
-      {title: "Emma's Playing Zelda"},
+      {title: "Broken phone in Brazil"},
     ],
     comment: { body: 'slick beet yo'}
 
   },
   {
-    username: 'JoDo',
+    username: 'WaterThoughts',
     songs: [
-      {title: 'Trees'},
-      {title: 'SomeRealGoodStuff'},
+      {title: 'Blue and Gold'},
+      // {title: 'SomeRealGoodStuff'},
     ],
-    comment: { body: 'neva gon giv you up!!!!!'}
+    comment: { body: 'Hmmm, water is blue. Never thought about that before.'}
 
   },
 ]

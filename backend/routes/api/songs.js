@@ -16,18 +16,18 @@ const { singleMulterUpload, singlePublicFileUpload } = require('../../awsS3');
 router.get('/', async (req, res) => {
   const songs = await Song.findAll();
 
-  return res.json(songs.reduce((obj, el) => {
-    obj[el.id] = el;
-    return obj;
-  }, {}));
+  return res.json(songs.reduce((obj, el) => {obj[el.id] = el; return obj;}, {}));
 });
 
 router.post('/', requireAuth, singleMulterUpload('audio'), validateSong, async (req, res) => {
-  const { title, description, previewImage} = req.body;
+  let { title, description, previewImage, albumId} = req.body;
   const url = await singlePublicFileUpload(req.file);
+  console.log("HEYYYY", url);
   const { user } = req;
-
-  const song = await user.createSong({title, description, url, previewImage});
+  if(description === '') {
+    description = null
+  }
+  const song = await user.createSong({title, description, url, previewImage, albumId});
 
   return res.json(song);
 });
@@ -57,8 +57,11 @@ router.get('/:songId', async (req, res, next) => {
 });
 
 router.put('/:songId', requireAuth, validateSongEdit, async (req, res, next) => {
-  const { title, description, url, previewImage } = req.body;
-  const editObj = { title, description, url, previewImage }
+  let { title, description, previewImage } = req.body;
+  if(description === '') {
+    description = null
+  }
+  const editObj = { title, description, previewImage }
   const { user } = req;
   const { songId } = req.params;
   const setObj = {}

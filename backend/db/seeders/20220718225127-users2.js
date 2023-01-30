@@ -5,41 +5,43 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Users', [
       {
-        firstName: 'Matt',
-        lastName: 'Fradd',
-        email: 'mattfradd@user.io',
-        username: 'PintsWithAquinas',
-        previewImage: 'https://pintswithaquinas.com/favicon.ico',
+        firstName: 'Whis',
+        lastName: 'This',
+        email: 'whisthis@user.io',
+        username: 'WhistlingThistle',
+        previewImage: '/images/seed-images/DSC_0068[1]-02-01.jpeg',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        firstName: 'Therese',
-        lastName: 'Martin',
-        email: 'therese.of.liseuix@user.io',
+        firstName: 'Little',
+        lastName: 'Flower',
+        email: 'littleflower@user.io',
         username: 'LittleFlower',
-        previewImage: 'https://www.littleflower.org/wp-content/uploads/2020/12/St-Therese-1440x825.jpg',
+        previewImage: '/images/seed-images/DSC_0101.JPG',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        firstName: 'Josh',
-        lastName: 'Dun',
-        email: 'junn@user.io',
-        username: 'JDeezle',
+        firstName: 'Home',
+        lastName: 'Town',
+        email: 'hometown@user.io',
+        username: 'Nostalgia',
+        previewImage: '/images/seed-images/DSC_0273.JPG',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        firstName: 'Tyler',
-        lastName: 'Joseph',
-        email: 'tyjoe@user.io',
-        username: 'TOP',
-        previewImage: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Twenty_one_pilots_logo_.jpg',
+        firstName: 'lil',
+        lastName: 'Guy',
+        email: 'lilguy@user.io',
+        username: 'lilGuy',
+        previewImage: '/images/seed-images/DSC_0486.JPG',
         hashedPassword: bcrypt.hashSync('password')
       },
       {
-        firstName: 'Joe',
-        lastName: 'Doe',
-        email: 'jdoe@user.io',
-        username: 'JoDo',
+        firstName: 'Water',
+        lastName: 'Thoughts',
+        email: 'waterthoughts@user.io',
+        username: 'WaterThoughts',
+        previewImage: '/images/seed-images/DSC_0664-1.jpg',
         hashedPassword: bcrypt.hashSync('password')
       },
     ], {});
@@ -48,7 +50,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Users', {
-      username: { [Op.in]: ['PintsWithAquinas', 'LittleFlower', 'JDeezle', 'TOP', 'JoDo'] }
+      username: { [Op.in]: ['WhistlingThistle', 'LittleFlower', 'Nostalgia', 'lilGuy', 'WaterThoughts'] }
     }, {});
   }
 };

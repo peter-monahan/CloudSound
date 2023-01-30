@@ -3,57 +3,57 @@
 const { User, Song, Playlist } = require('../models');
 
 const userPlaylists = [
-  {
-    username: 'PintsWithAquinas',
-    songs: [
-      {title: 'Trees'},
-      {title: "Beer's in the Laundry"},
-      {title: 'SomeRealGoodStuff'},
-      {title: 'Bogdanowicz: Holy Mary, Mother Of God'},
-      {title: 'Keating: Te Deum'},
-    ],
-    playlist: { name: 'Likes'}
-  },
-  {
-    username: 'LittleFlower',
-    songs: [
-      {title: 'Trees'},
-      {title: 'Formidable'},
-    ],
-    playlist: { name: 'Favs'}
-  },
-  {
-    username: 'JDeezle',
-    songs: [
-      {title: 'Trees'},
-      {title: "Emma's Playing Zelda"},
-      {title: 'Morph'},
-      {title: 'SomeRealGoodStuff'},
-    ],
-    playlist: { name: 'Mood'}
+  // {
+  //   username: 'WhistlingThistle',
+  //   songs: [
+  //     {title: 'Trees'},
+  //     {title: "Beer's in the Laundry"},
+  //     {title: 'SomeRealGoodStuff'},
+  //     {title: 'Bogdanowicz: Holy Mary, Mother Of God'},
+  //     {title: 'Keating: Te Deum'},
+  //   ],
+  //   playlist: { name: 'Likes'}
+  // },
+  // {
+  //   username: 'LittleFlower',
+  //   songs: [
+  //     {title: 'Trees'},
+  //     {title: 'Formidable'},
+  //   ],
+  //   playlist: { name: 'Favs'}
+  // },
+  // {
+  //   username: 'Nostalgia',
+  //   songs: [
+  //     {title: 'Trees'},
+  //     {title: "Emma's Playing Zelda"},
+  //     {title: 'Morph'},
+  //     {title: 'SomeRealGoodStuff'},
+  //   ],
+  //   playlist: { name: 'Mood'}
 
-  },
-  {
-    username: 'TOP',
-    songs: [
-      {title: "Emma's Playing Zelda"},
-      {title: 'Trees'},
-      {title: 'Formidable'},
-      {title: 'Bruno'},
-      {title: 'SomeRealGoodStuff'},
-    ],
-    playlist: { name: 'NightNight'}
+  // },
+  // {
+  //   username: 'lilGuy',
+  //   songs: [
+  //     {title: "Emma's Playing Zelda"},
+  //     {title: 'Trees'},
+  //     {title: 'Formidable'},
+  //     {title: 'Bruno'},
+  //     {title: 'SomeRealGoodStuff'},
+  //   ],
+  //   playlist: { name: 'NightNight'}
 
-  },
-  {
-    username: 'JoDo',
-    songs: [
-      {title: 'Trees'},
-      {title: 'SomeRealGoodStuff'},
-    ],
-    playlist: { name: 'FavFavFAVETime!!!'}
+  // },
+  // {
+  //   username: 'WaterThoughts',
+  //   songs: [
+  //     {title: 'Trees'},
+  //     {title: 'SomeRealGoodStuff'},
+  //   ],
+  //   playlist: { name: 'FavFavFAVETime!!!'}
 
-  },
+  // },
 ]
 
 module.exports = {
