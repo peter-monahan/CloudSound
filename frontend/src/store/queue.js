@@ -69,6 +69,12 @@ export const togglePlayback = () => {
   }
 };
 
+export const toggleRepeat = () => {
+  return {
+    type: TOGGLE_REPEAT,
+  }
+};
+
 const initialState = {head: null, tail: null, current: null, nodes: {}, repeat: false, isPlaying: false, nextId: 0};
 
 //music REDUCER
@@ -104,8 +110,53 @@ export default function reducer(state = initialState, action) {
 
       return newState;
     } case ADD_LIST_TO_QUEUE: {
+      if (action.songs.length === 0) return newState;
 
-      console.log(ADD_LIST_TO_QUEUE + " <--------------------  NOT YET ADDED")
+      let next = null;
+      let prev = null;
+      let newId = newState.nextId;
+      newState.nextId++;
+      if(newState.current === null) {
+        newState.head = newId;
+        newState.tail = newId;
+        newState.current = newId;
+      } else if(newState.current === newState.tail || action.position.toUpperCase() === "END") {
+        prev = newState.tail;
+        newState.nodes[newState.tail].next = newId;
+        newState.tail = newId;
+      } else {
+        const curr = newState.nodes[newState.current];
+        prev = curr.id;
+        next = curr.next;
+        curr.next = newId;
+        newState.nodes[next].prev = newId;
+      }
+      if(action.position.toUpperCase() === "CURRENT") {
+        newState.current = newId;
+        newState.isPlaying = true;
+      }
+      newState.nodes[newId] = {song: action.songs[0], id: newId, next, prev}
+
+      for(let i = 1; i < action.songs.length; i++) {
+        // let next = null;
+        prev = newId;
+        newId = newState.nextId;
+        newState.nextId++;
+
+        if(prev === newState.tail || action.position.toUpperCase() === "END") {
+          prev = newState.tail;
+          newState.nodes[newState.tail].next = newId;
+          newState.tail = newId;
+        } else {
+          const curr = newState.nodes[prev];
+          // prev = curr.id;
+          next = curr.next;
+          curr.next = newId;
+          newState.nodes[next].prev = newId;
+        }
+        newState.nodes[newId] = {song: action.songs[i], id: newId, next, prev}
+      }
+
       return newState;
     } case REMOVE_FROM_QUEUE: {
 

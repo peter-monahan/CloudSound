@@ -30,7 +30,8 @@ function SongMiniShow ({song, size='medium'}) {
     <div className={`mini-show-song`} >
 
       <div className='song-img-title'>
-        <img src={song.previewImage} className={`mini-image-${size}`} onClick={() => dispatch(addSong(song, 'CURRENT'))}/>
+        {/* <img src={song.previewImage} className={`mini-image-${size}`} onClick={() => dispatch(addSong(song, 'CURRENT'))}/> */}
+        <div className={`mini-image-${size}`} id={'mini-img-song'} style={{backgroundImage: `url("${song.previewImage}")`}} onClick={() => dispatch(addSong(song, 'CURRENT'))}><i className="fa-solid fa-play fa-2x"></i></div>
         <Link to={`/songs/${song.id}`}>
         <p>{song.title}</p>
         </Link>

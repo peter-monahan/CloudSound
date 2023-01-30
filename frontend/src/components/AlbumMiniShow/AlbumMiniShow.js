@@ -27,11 +27,11 @@ function AlbumMiniShow ({album, size='medium'}) {
 
   return (
     <div className='cloud'>
-    {display1 && <div  className="message-options-container"><div  className="message-options"><button  onClick={() => dispatch(addSongList(album, 'END'))}>Add to queue</button><button  onClick={() => dispatch(addSongList(album, 'NEXT'))}>Play next</button></div></div>}
+    {display1 && <div  className="message-options-container"><div  className="message-options"><button  onClick={() => dispatch(addSongList(album.Songs, 'END'))}>Add to queue</button><button  onClick={() => dispatch(addSongList(album.Songs, 'NEXT'))}>Play next</button></div></div>}
   <div className={`mini-show-song`} >
 
     <div className='song-img-title'>
-      <img src={album.previewImage} className={`mini-image-${size}`} onClick={() => dispatch(addSongList(album, 'CURRENT'))}/>
+      <img src={album.previewImage} className={`mini-image-${size}`} onClick={() => dispatch(addSongList(album.Songs, 'CURRENT'))}/>
       <Link to={`/albums/${album.id}`}>
       <p>{album.title}</p>
       </Link>

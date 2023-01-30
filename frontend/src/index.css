@@ -34,28 +34,47 @@ body {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-/* button {
-  border-radius: 20px;
-  background-color: rgb(214, 214, 214);
-  margin: 2px;
+button {
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; */
+  margin: 1px;
+  border-radius: 30px;
+  background:#ECEFF1;
+  margin: 1px;
   padding-left: 15px;
   padding-right: 15px;
   cursor: pointer;
-  color: white;
-  border: 1px solid black;
-} */
+  border: none;
+  box-shadow: 4px 4px rgba(0,0,0,0.2);
+  color: rgb(22, 98, 128);
 
-/* button:disabled {
-  background-color: rgb(132, 124, 118);
-  color: rgb(185, 185, 185);
+}
+
+button:active {
+  box-shadow: 3px 3px rgba(0,0,0,0.2);
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+}
+
+button:disabled {
+  /* background-color: rgb(132, 124, 118); */
+  /* color: rgb(185, 185, 185); */
   cursor: default;
-} */
+  color: rgba(22, 98, 128, 0.349);
+  margin: 1px;
+  box-shadow: 4px 4px rgba(0,0,0,0.2);
+
+}
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 123, 172, 0.605) rgba(42, 104, 196, 0.753);
 }
 
-/* Works on Chrome, Edge, and Safari */
+
 *::-webkit-scrollbar {
   width: 12px;
 }
@@ -68,4 +87,48 @@ body {
   background-color: rgb(204, 242, 255);
   border-radius: 20px;
   border: 3px solid rgba(167, 198, 244, 0.753);
+}
+
+
+
+
+
+
+
+
+.basic-form {
+  margin-top: 80px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* border: 2px solid black; */
+  /* border-radius: 9px; */
+  row-gap: 10px;
+  /* background-color: rgb(248, 248, 248); */
+  padding: 15px;
+
+  background:#d6eaf8;
+  box-shadow: 10px 10px rgba(0,0,0,0.2);
+  border-radius:50px;
+}
+.formElement {
+  /* margin-top: 10px; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  align-items: flex-start;
+  /* width: 100%; */
+  color: rgb(22, 98, 128);
+
+  text-shadow: none;
+  font-size: 10pt;
+}
+
+.errorBox {
+  color: rgb(22, 98, 128);
+
+  text-shadow: none;
+  font-size: 11pt;
 }

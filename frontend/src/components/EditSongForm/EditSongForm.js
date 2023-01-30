@@ -12,14 +12,16 @@ const EditSongForm = () => {
   const history = useHistory();
 
   const sessionUser = useSelector(state => state.session.user);
-  const song = useSelector(state => state.display.song);
+  const song = useSelector(state => state.songs[songId]);
 
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
   const [previewImage, setPreviewImage] = useState('');
-
+  const [previewPreview, setPreviewPreview] = useState('')
+  const [validImage, setValidImage]= useState(true);
+  const [loadedImg, setLoadedImg] = useState(true);
 
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -46,12 +48,20 @@ const EditSongForm = () => {
 
     if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
     if(description && description.length > 255) errors.push('Description must be less than 255 characters.');
-    if(!url) errors.push('URL is required');
+    // if(!url) errors.push('URL is required');
+    if(!validImage) errors.push('Song Image must be valid image url or blank.');
     setValidationErrors(errors);
-  }, [title, description, url])
+  }, [title, description, url, validImage])
 
 
+  useEffect(() => {
+    setLoadedImg(false)
+    let timeout = setTimeout(() => {setPreviewPreview(previewImage); setLoadedImg(true)}, 100);
 
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [previewImage])
   // if(newSong) {
   //   return <Redirect to={`/songs/${newSong.id}`} />;
   // }
@@ -59,7 +69,7 @@ const EditSongForm = () => {
   const destroySong = async (e) => {
     e.preventDefault();
 
-    await dispatch(deleteSong(songId));
+    dispatch(deleteSong(songId));
 
     history.push(`/users/${sessionUser.id}`)
   }
@@ -73,8 +83,7 @@ const EditSongForm = () => {
       songId,
       payload: {
         title,
-        description: description && description.length ? description : undefined,
-        url,
+        description,
         previewImage
       }
     }
@@ -83,6 +92,7 @@ const EditSongForm = () => {
     let song;
     if(!validationErrors.length) {
       song = await dispatch(editSong(outerPayload));
+      console.log(song)
       if(song.errors) {
         setValidationErrors(song.errors);
       } else {
@@ -93,7 +103,7 @@ const EditSongForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='create-song-form' >
+    <form onSubmit={onSubmit} className='basic-form edit-song-form' >
       { validationErrors.length > 0 && hasSubmitted &&
       <ul className='errorBox'>
         {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
@@ -121,7 +131,7 @@ const EditSongForm = () => {
         />
       </div>
 
-      <div className='formElement' >
+      {/* <div className='formElement' >
         <label htmlFor="url">Audio Url:</label>
         <input
         id='url'
@@ -129,19 +139,20 @@ const EditSongForm = () => {
         value={url}
         onChange={e => setUrl(e.target.value)}
         />
-      </div>
+      </div> */}
 
       { (song && !song.albumId && <div className='formElement' >
-        <label htmlFor="previewImage">Song Image:</label>
+      <label htmlFor="previewImage">Song Image</label>
         <input
         id='previewImage'
         type='text'
         value={previewImage}
-        onChange={e => setPreviewImage(e.target.value)}
+        onChange={e => {setPreviewImage(e.target.value); setValidImage(true)}}
         />
+        { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>)}
 
-      <button className='formElement' type='submit'>Save</button>
+      <button disabled={!loadedImg} className='formElement' type='submit'>Save</button>
       <button onClick={destroySong}>Delete Song</button>
 
     </form>

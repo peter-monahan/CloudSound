@@ -20,11 +20,12 @@ const CreateAlbumForm = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [previewImage, setPreviewImage] = useState('');
-
+  const [previewPreview, setPreviewPreview] = useState('')
 
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
-
+  const [validImage, setValidImage]= useState(true);
+  const [loadedImg, setLoadedImg] = useState(true);
   useEffect(() => {
     return () => dispatch(resetAlbum());
   }, [])
@@ -34,9 +35,19 @@ const CreateAlbumForm = () => {
 
     if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
     if(description.length > 255) errors.push('Description must be less than 255 characters.');
+    if(!validImage) errors.push('Album Image must be valid image url or blank.');
     setValidationErrors(errors);
-  }, [title, description])
+  }, [title, description,validImage])
 
+
+  useEffect(() => {
+    setLoadedImg(false)
+    let timeout = setTimeout(() => {setPreviewPreview(previewImage); setLoadedImg(true)}, 100);
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [previewImage])
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -64,11 +75,11 @@ const CreateAlbumForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='create-album-form' >
+    <form onSubmit={onSubmit} className='basic-form create-album-form' >
       { validationErrors.length > 0 && hasSubmitted &&
-      <ul className='errorBox'>
-        {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
-      </ul>
+      <div className='errorBox'>
+        {validationErrors.map((err, i) => <div className='err-message' key={i}>{err}</div>)}
+      </div>
       }
 
       <div className='formElement' >
@@ -94,16 +105,17 @@ const CreateAlbumForm = () => {
 
 
       <div className='formElement' >
-        <label htmlFor="previewImage">Album Image:</label>
+        <label htmlFor="previewImage">Album Image</label>
         <input
         id='previewImage'
         type='text'
         value={previewImage}
-        onChange={e => setPreviewImage(e.target.value)}
+        onChange={e => {setPreviewImage(e.target.value); setValidImage(true)}}
         />
+        { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>
 
-      <button className='formElement' type='submit'>Create Album</button>
+      <button disabled={!loadedImg} className='formElement' type='submit'>Create Album</button>
 
     </form>
   );

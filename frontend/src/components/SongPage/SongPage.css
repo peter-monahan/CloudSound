@@ -1,3 +1,31 @@
+.item-image {
+  margin: 0px;
+  width:200px;
+  height:200px;
+  object-fit:cover;
+}
+.image-box {
+  margin: 0px;
+  width:200px;
+  height:200px;
+  border: 1px solid black;
+}
+
+.item-details {
+  margin-left: 35px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.item-details h2{
+  margin-bottom: 5px;
+}
+
+.item-detail {
+  display: flex;
+  width: 600px;
+}
 .song-comments {
   display: flex;
   column-gap: 5px;

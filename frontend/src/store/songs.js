@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const SET_SONGS = "display/SET_SONGS";
 const RESET_SONGS = "display/RESET_SONGS";
 const SET_SONG = "display/SET_SONG";
+const REMOVE_SONG = "display/REMOVE_SONG"
 
 export const setSongs = (songs) => ({
   type: SET_SONGS,
@@ -53,16 +54,16 @@ export const createSong = ({albumId, payload}) => async (dispatch) => {
 
 
 
-  if(albumId) {
-    try {
-      response = await csrfFetch(`/api/albums/${albumId}/songs`, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      response = err;
-    }
-  } else {
+  // if(albumId) {
+  //   try {
+  //     response = await csrfFetch(`/api/albums/${albumId}/songs`, {
+  //       method: 'POST',
+  //       body: JSON.stringify(payload)
+  //     });
+  //   } catch (err) {
+  //     response = err;
+  //   }
+  // } else {
     try {
       response = await csrfFetch(`/api/songs`, {
         method: 'POST',
@@ -74,12 +75,12 @@ export const createSong = ({albumId, payload}) => async (dispatch) => {
     } catch (err) {
       response = err;
     }
-  }
+  // }
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setSong(data.song));
-    return data.song;
+    dispatch(setSong(data));
+    return data;
   } else {
     const error = await response.json();
     console.error(error)
@@ -100,8 +101,8 @@ export const editSong = ({songId, payload}) => async (dispatch) => {
 
   if(response.ok) {
     const data = await response.json();
-    dispatch(setSong(data.song));
-    return data.song;
+    dispatch(setSong(data));
+    return data;
   } else {
     const error = await response.json();
     console.error(error)
@@ -121,7 +122,7 @@ export const deleteSong = (songId) => async (dispatch) => {
 
   if(response.ok) {
 
-    dispatch(removeSong());
+    dispatch(removeSong(songId));
 
   } else {
     const error = await response.json();
@@ -198,6 +199,9 @@ export default function songs (state = initialState, action) {
       return newState;
     case RESET_SONGS:
        newState = {};
+      return newState;
+    case REMOVE_SONG:
+      delete newState[action.songId];
       return newState;
     default:
       return state;
