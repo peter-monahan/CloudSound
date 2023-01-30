@@ -10,9 +10,13 @@ const { User, Song, Album } = require('../../db/models');
 
 
 router.get('/', async (req, res) => {
-  const albums = await Album.findAll();
+  const albums = await Album.findAll({include: [
+    {
+      model: Song,
+    }
+  ]});
 
-  return res.json({albums});
+  return res.json(albums.reduce((obj, el) => {obj[el.id] = el; return obj}, {}));
 });
 
 router.post('/', requireAuth, validateAlbum, async (req, res) => {
@@ -21,7 +25,7 @@ router.post('/', requireAuth, validateAlbum, async (req, res) => {
 
   const album = await user.createAlbum({title, description, previewImage});
 
-  return res.json({album});
+  return res.json(album);
 });
 
 
@@ -37,8 +41,9 @@ router.get('/:albumId', async (req, res, next) => {
       model: Song,
     }
   ]});
+
   if(album) {
-    return res.json({album});
+    return res.json(album);
   } else {
     const err = new Error("The requested album couldn't be found.");
     err.title = "Album Not Found";
@@ -82,7 +87,7 @@ router.put('/:albumId', requireAuth, validateAlbumEdit, async (req, res, next) =
   }
 
 
-  return res.json({album});
+  return res.json(album);
 });
 
 router.delete('/:albumId', requireAuth, async (req, res, next) => {
@@ -124,7 +129,7 @@ router.post('/:albumId/songs', requireAuth, validateSong, async (req, res, next)
     if(album.userId === user.id) {
       const song = await album.createSong({userId: user.id, title, description, url, previewImage});
 
-      return res.json({song});
+      return res.json(song);
     } else {
       const err = new Error("Unauthorized for this resource");
       err.title = "Forbidden";

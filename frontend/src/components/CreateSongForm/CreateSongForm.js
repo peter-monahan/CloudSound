@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory} from 'react-router-dom';
-import { createSong, resetSong } from '../../store/display';
+import { createSong } from '../../store/songs';
 import { getUserAlbums } from '../../store/albums';
 
 
@@ -14,21 +14,23 @@ const CreateSongForm = () => {
 
   const sessionUser = useSelector(state => state.session.user);
   const newSong = useSelector(state => state.display.song);
-  const albums = useSelector(state => state.albums);
+  const albums = Object.values(useSelector(state => state.albums));
 
   const [albumId, setAlbumId] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [url, setUrl] = useState('');
+  const [audio, setAudio] = useState('');
   const [previewImage, setPreviewImage] = useState('');
-
+  const [previewPreview, setPreviewPreview] = useState('')
+  const [validImage, setValidImage]= useState(true);
+  const [loadedImg, setLoadedImg] = useState(true);
 
   const [validationErrors, setValidationErrors] = useState([]);
   const [hasSubmitted, setHasSubmitted] = useState(false)
 
-  useEffect(() => {
-    return () => dispatch(resetSong());
-  }, [])
+  // useEffect(() => {
+  //   return () => dispatch(resetSong());
+  // }, [])
 
   useEffect(() => {
     if(sessionUser) {
@@ -41,9 +43,11 @@ const CreateSongForm = () => {
 
     if(title.length < 1 || title.length > 64) errors.push('Please provide a title with between 1-64 characters.');
     if(description.length > 255) errors.push('Description must be less than 255 characters.');
-    if(!url) errors.push('URL is required');
+    // if(!audio) errors.push('Audio is required');
+    if(!(audio && audio.type.startsWith('audio'))) errors.push('Must choose a valid audio file');
+    if(!validImage) errors.push('Song Image must be valid image url or blank.');
     setValidationErrors(errors);
-  }, [title, description, url])
+  }, [title, description, audio, validImage])
 
   useEffect(() => {
     if(albumId) {
@@ -53,6 +57,15 @@ const CreateSongForm = () => {
       console.log('Album img', album.previewImage)
     }
   }, [albumId]);
+
+  useEffect(() => {
+    setLoadedImg(false)
+    let timeout = setTimeout(() => {setPreviewPreview(previewImage); setLoadedImg(true)}, 100);
+
+    return () => {
+      clearTimeout(timeout);
+    }
+  }, [previewImage])
 
   // if(newSong) {
   //   return <Redirect to={`/songs/${newSong.id}`} />;
@@ -67,8 +80,8 @@ const CreateSongForm = () => {
       albumId,
       payload: {
         title,
-        description: description.length ? description : undefined,
-        url,
+        description,
+        audio,
         previewImage
       }
     }
@@ -86,15 +99,20 @@ const CreateSongForm = () => {
 
   }
 
+  const updateFile = (e) => {
+    const file = e.target.files[0];
+    if (file) setAudio(file);
+  };
+
   return (
-    <form onSubmit={onSubmit} className='create-song-form' >
+    <form onSubmit={onSubmit} className='basic-form create-song-form' >
       { validationErrors.length > 0 && hasSubmitted &&
-      <ul className='errorBox'>
-        {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
-      </ul>
+      <div className='errorBox'>
+        {validationErrors.map((err, i) => <div className='err-message' key={i}>{err}</div>)}
+      </div>
       }
       { albums.length > 0 && <div className='formElement' >
-        <label htmlFor="album">Album:</label>
+        <label htmlFor="album">Album</label>
         <select
         id='album'
         value={albumId}
@@ -108,7 +126,7 @@ const CreateSongForm = () => {
       </div>}
 
       <div className='formElement' >
-        <label htmlFor="title">Song Title:</label>
+        <label htmlFor="title">Song Title</label>
         <input
         id='title'
         type='text'
@@ -119,7 +137,7 @@ const CreateSongForm = () => {
       </div>
 
       <div className='formElement' >
-        <label htmlFor="description">Description:</label>
+        <label htmlFor="description">Description</label>
         <input
         id='description'
         type='text'
@@ -128,27 +146,29 @@ const CreateSongForm = () => {
         />
       </div>
 
-      <div className='formElement' >
-        <label htmlFor="url">Audio Url:</label>
+      <div className='formElement audio-form-element' >
+        <label htmlFor="audio"><div className='form-audio-button'>Choose Audio File</div></label>
         <input
-        id='url'
-        type='text'
-        value={url}
-        onChange={e => setUrl(e.target.value)}
+        id='audio'
+        type='file'
+        onChange={updateFile}
+        className="form-audio"
         />
+        <div className='audio-file-name'>{!!audio && audio.name}</div>
       </div>
 
       { (!albumId && <div className='formElement' >
-        <label htmlFor="previewImage">Song Image:</label>
+        <label htmlFor="previewImage">Song Image</label>
         <input
         id='previewImage'
         type='text'
         value={previewImage}
-        onChange={e => setPreviewImage(e.target.value)}
+        onChange={e => {setPreviewImage(e.target.value); setValidImage(true)}}
         />
+        { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>)}
 
-      <button className='formElement' type='submit'>Create Song</button>
+      <button disabled={!loadedImg} className='formElement' type='submit'>Create Song</button>
 
     </form>
   );

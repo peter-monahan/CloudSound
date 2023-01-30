@@ -2,19 +2,19 @@
   display: flex;
   justify-content: center;
   align-items:center;
-  border-top: 2px solid black;
+  border-top: 1px solid rgba(133, 162, 255, 0.726);
   column-gap: 10px;
   height: 100px;
   margin: 0px;
   width: 100%;
   text-decoration: none;
-  background-color: aliceblue;
+  background-color: rgb(204, 242, 255);
   z-index: 100;
 }
 
 .footer-button {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid rgba(133, 162, 255, 0.726);
+  border-right: 1px solid rgba(133, 162, 255, 0.726);
   height: 100%;
   display: flex;
   align-items: center;

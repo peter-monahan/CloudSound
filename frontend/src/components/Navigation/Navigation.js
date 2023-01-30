@@ -28,8 +28,8 @@ const Navigation = ({isLoaded}) => {
     <>
     <nav className="navbar">
       <div className="nav-group">
-      <h1>CloudSound</h1>
-      <NavLink to={'/'} className="nav-button home">Home</NavLink>
+
+      <NavLink to={'/'}><h1>CloudSound</h1></NavLink>
       </div>
       <div className="nav-spacer"></div>
       {isLoaded && sessionLinks}

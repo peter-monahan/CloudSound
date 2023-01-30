@@ -5,13 +5,14 @@
   position: absolute;
   top:50px;
   right: 40px;
-  border: 2px solid black;
+  border: 2px solid rgba(42, 104, 196, 0.753);
+  border-radius: 5px;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: rgb(84, 185, 229);
 }
 
 .user-icon {
-  color: #4a4a4a;
+  color: rgb(204, 242, 255);
   cursor: pointer;
 
 }

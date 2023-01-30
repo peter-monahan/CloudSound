@@ -22,13 +22,10 @@ const validateSong = [
     .exists({ checkFalsy: true })
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
-  check('description')
-    .if(check('description').exists())
-    .isLength({ min: 1 })
-    .withMessage('A description must have at least 1 character.'),
-  check('url')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a url for the audio'),
+  // check('description')
+  //   .if(check('description').exists())
+  //   .isLength({ min: 1 })
+  //   .withMessage('A description must have at least 1 character.'),
   handleValidationErrors
 ];
 
@@ -37,10 +34,10 @@ const validateSongEdit = [
     .if(check('title').exists())
     .isLength({ min: 1 })
     .withMessage('Please provide a title with at least 1 character.'),
-  check('description')
-    .if(check('description').exists())
-    .isLength({ min: 1 })
-    .withMessage('A description must have at least 1 character.'),
+  // check('description')
+  //   .if(check('description').exists())
+  //   .isLength({ min: 1 })
+  //   .withMessage('A description must have at least 1 character.'),
   handleValidationErrors
 ];
 

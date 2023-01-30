@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ItemDetail from "../ItemDetail";
 import ItemEdit from "../ItemEdit";
 import MiniShow from "../MiniShow";
 import SongCommentBox from "../SongCommentBox";
-import { getSong, resetSong } from "../../store/display";
+import { getSong } from "../../store/songs";
 
 
 
@@ -15,9 +15,8 @@ import './SongPage.css';
 function SongPage () {
   const dispatch = useDispatch();
   const {songId} = useParams();
-
   const sessionUser = useSelector(state => state.session.user);
-  const displaySong = useSelector(state => state.display.song);
+  const displaySong = useSelector(state => state.songs[songId]);
   // const displayUser = useSelector(state => state.display.user);
   // const displayAlbum = useSelector(state => state.display.album);
   // const comments = useSelector(state => state.comments);
@@ -26,9 +25,9 @@ function SongPage () {
   const [details, setDetails] = useState([]);
 
 
-  useEffect(() => {
-    return () => dispatch(resetSong());
-  }, []);
+  // useEffect(() => {
+  //   return () => dispatch(resetSong());
+  // }, []);
 
   useEffect(  () => {
     dispatch(getSong(songId));
@@ -63,7 +62,17 @@ function SongPage () {
   return (
     <div className="song-page">
       <div className="top-song-page">
-      {displaySong && <ItemDetail title={displaySong.title} details={details} image={displaySong.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />}
+        <div className="item-detail">
+          <div className='image-box'>
+            <img src={displaySong?.previewImage} className='item-image'/>
+          </div>
+          <div className='item-details'>
+            <h2>{displaySong?.title}</h2>
+            <div>Song • <Link to={`/users/${displaySong?.userId}`}>{displaySong?.Artist?.username}</Link> • {'2023'}</div>
+            <div className="song-description">{displaySong?.description}</div>
+          </div>
+        </div>
+      {/* {displaySong && <ItemDetail title={displaySong.title} details={details} image={displaySong.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'} />} */}
       {owned && <ItemEdit itemName={'music'} to={`/songs/${songId}/edit`} />}
       </div>
       <div className="comments-area">

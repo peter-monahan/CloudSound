@@ -20,8 +20,8 @@
   position: relative;
   bottom: 12px;
   right: 0.5px;
-  color: rgb(0, 0, 0);
-  background-color: white;
+
+  /* background-color: white; */
   z-index: 10;
   height: 16px;
 }

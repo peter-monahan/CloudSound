@@ -5,13 +5,15 @@ import display from "./display";
 import songs from "./songs";
 import albums from "./albums";
 import comments from "./comments";
+import queue from './queue';
 
 const rootReducer = combineReducers({
   session,
   display,
   songs,
   albums,
-  comments
+  comments,
+  queue
 });
 
 let enhancer;

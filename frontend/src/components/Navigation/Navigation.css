@@ -3,15 +3,22 @@
   display: flex;
   justify-content:space-between;
   align-items:center;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid rgba(42, 104, 196, 0.753);
   column-gap: 10px;
   height: 50px;
   margin: 0px;
   width: 100%;
   text-decoration: none;
-  background-color: aliceblue;
+  background-color: rgb(40, 164, 215);
   z-index: 100;
+  color: rgb(204, 242, 255);
 }
+
+.navbar a {
+  color: rgb(204, 242, 255);
+
+}
+
 .navbar-placeholder {
   height: 50px;
   margin: 0px;
@@ -19,8 +26,8 @@
 }
 
 .nav-button {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid rgba(42, 104, 196, 0.753);
+  border-right: 1px solid rgba(42, 104, 196, 0.753);
   height: 100%;
   display: flex;
   align-items: center;
@@ -29,7 +36,7 @@
 }
 
 .login {
-  border-left: 1px solid black;
+  border-left: 1px solid rgba(42, 104, 196, 0.753);
   border-right: 0px;
 }
 
@@ -42,6 +49,9 @@
   height: 100%;
 }
 
+.nav-group h1{
+  font-size: xx-large;
+}
 
 
 .nav-spacer {

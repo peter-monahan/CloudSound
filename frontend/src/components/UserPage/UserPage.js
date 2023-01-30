@@ -5,6 +5,8 @@ import { getUser, resetUser } from "../../store/display";
 import CreateEdit from "../CreateEdit";
 import ItemDetail from "../ItemDetail";
 import MiniShow from "../MiniShow/MiniShow";
+import SongMiniShow from "../SongMiniShow";
+import AlbumMiniShow from "../AlbumMiniShow";
 import { getUserSongs, resetSongs } from "../../store/songs";
 import { getUserAlbums, resetAlbums } from "../../store/albums";
 
@@ -66,16 +68,16 @@ function UserPage ({isLoaded}) {
       <div className="songs-area">
         <h3>Songs</h3>
         <div className="user-display-items">
-        {songs.map(song => {
-          return <MiniShow className={'user-song'} key={song.id} to={`/songs/${song.id}`} title={song.title} image={song.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+        {Object.values(songs).map(song => {
+          return <SongMiniShow song={song} className={'user-song'} key={song.id} />
         })}
         </div>
       </div>
       <div className="albums-area">
         <h3>Albums</h3>
         <div className="user-display-items">
-        {albums.map(album => {
-          return <MiniShow key={album.id} to={`/albums/${album.id}`} title={album.title} image={album.previewImage || 'https://play-lh.googleusercontent.com/LDBkbGDP2I8RH4MGcRMPkgIB1R4Nl7MHxLcbYvOmjB5tEj6xrklDRUju6B2BA_B5hbg'}/>
+        {Object.values(albums).map(album => {
+          return <AlbumMiniShow album={album} key={album.id} />
         })}
         </div>
       </div>

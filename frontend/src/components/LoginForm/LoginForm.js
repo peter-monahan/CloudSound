@@ -62,7 +62,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='loginForm' >
+    <form onSubmit={onSubmit} className='basic-form login-form' >
       { errors.length > 0 &&
       <ul className='errorBox'>
         {errors.map((err, i) => <li key={i}>{err}</li>)}
@@ -75,6 +75,7 @@ const LoginForm = () => {
         type='text'
         value={credential}
         onChange={e => setCredential(e.target.value)}
+        required
         />
       </div>
       <div className='formElement' >
@@ -84,6 +85,7 @@ const LoginForm = () => {
         type='password'
         value={password}
         onChange={e => setPassword(e.target.value)}
+        required
         />
       </div>
       <button className='formElement' type='submit'>login</button>

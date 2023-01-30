@@ -3,48 +3,50 @@
 const { User, Song, Album } = require('../models');
 
 const userAlbums = [
+  // {
+  //   username: 'WhistlingThistle',
+  //   songs: [
+  //     {title: "Groundhog Day"},
+  //     {title: "All my friends Withered."},
+  //   ],
+  //   album: { title: 'Sleepy'}
+  // },
+  // {
+  //   username: 'LittleFlower',
+  //   songs: [
+  //     {title: 'Bogdanowicz: Holy Mary, Mother Of God'},
+  //     {title: 'Keating: Te Deum'},
+  //   ],
+  //   album: { title: 'Holi'}
+  // },
   {
-    username: 'PintsWithAquinas',
+    username: 'Nostalgia',
     songs: [
-      {title: "Emma's Playing Zelda"},
-      {title: "Beer's in the Laundry"},
+      {title: 'We met at Chick-fil-A'},
+      {title: 'Wayfaring'},
     ],
-    album: { title: 'Sleepy'}
-  },
-  {
-    username: 'LittleFlower',
-    songs: [
-      {title: 'Bogdanowicz: Holy Mary, Mother Of God'},
-      {title: 'Keating: Te Deum'},
-    ],
-    album: { title: 'Holi'}
-  },
-  {
-    username: 'JDeezle',
-    songs: [
-      {title: 'Morph'},
-    ],
-    album: { title: 'Bam!'}
+    album: { title: 'First Stalgia' , description: 'Spatial audio of family life, with some music to drown out the cries of unhappy children.', previewImage: '/images/seed-images/1547057011872-5e6aa1fb-3c5b-49a3-a47c-8a4be5e1a713.jpg'}
 
   },
   {
-    username: 'TOP',
+    username: 'lilGuy',
     songs: [
-      {title: 'Trees'},
-      {title: 'Formidable'},
+      {title: 'Blue and Gold'},
+      {title: 'Mac n\' cheese with hot sauce'},
+      {title: 'Broken phone in Brazil'},
     ],
-    album: { title: 'DooDeet'}
+    album: { title: 'Brazilled' , description: 'A saga of flight, arrival, and disillusionment.', previewImage: '/images/seed-images/DSC_0199.JPG'}
 
   },
-  {
-    username: 'JoDo',
-    songs: [
-      {title: 'Bruno'},
-      {title: 'SomeRealGoodStuff'},
-    ],
-    album: { title: 'FavFavTime'}
+  // {
+  //   username: 'WaterThoughts',
+  //   songs: [
+  //     {title: 'Bruno'},
+  //     {title: 'SomeRealGoodStuff'},
+  //   ],
+  //   album: { title: 'FavFavTime'}
 
-  },
+  // },
 ]
 
 module.exports = {

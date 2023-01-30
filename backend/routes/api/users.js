@@ -46,7 +46,7 @@ router.get('/:userId/songs', async (req, res, next) => {
 
   if(user) {
     const songs = await user.getSongs();
-    res.json({songs});
+    res.json(songs.reduce((obj, el) => {obj[el.id] = el; return obj;}, {}));
   } else {
     const err = new Error("The requested user/artist couldn't be found.");
     err.title = "User/Artist Not Found";
@@ -62,7 +62,7 @@ router.get('/:userId/playlists', async (req, res, next) => {
 
   if(user) {
     const playlists = await user.getPlaylists();
-    res.json({playlists});
+    res.json(playlists.reduce((obj, el) => {obj[el.id] = el; return obj;}, {}));
   } else {
     const err = new Error("The requested user/artist couldn't be found.");
     err.title = "User/Artist Not Found";
@@ -78,7 +78,7 @@ router.get('/:userId/albums', async (req, res, next) => {
 
   if(user) {
     const albums = await user.getAlbums();
-    res.json({albums});
+    res.json(albums.reduce((obj, el) => {obj[el.id] = el; return obj;}, {}));
   } else {
     const err = new Error("The requested user/artist couldn't be found.");
     err.title = "User/Artist Not Found";

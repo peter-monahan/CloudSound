@@ -57,7 +57,7 @@ const SignupForm = () => {
     if(error) {
       console.error(error);
       payload = {
-        email: 'demouser@cloudsounds.com',
+        email: 'demouser@cloudsound.com',
         username: 'demo-user',
         firstName: 'demo',
         lastName: 'user',
@@ -95,76 +95,85 @@ const SignupForm = () => {
   }
 
   return (
-    <form onSubmit={onSubmit} className='signupForm' >
+
+    <form onSubmit={onSubmit} className='basic-form signup-form' >
       { validationErrors.length > 0 && hasSubmitted &&
-      <ul className='errorBox'>
-        {validationErrors.map((err, i) => <li key={i}>{err}</li>)}
-      </ul>
+      <div className='errorBox'>
+        {validationErrors.map((err, i) => <div className='err-message' key={i}>{err}</div>)}
+      </div>
       }
       <div className='formElement' >
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
         id='email'
         type='text'
         value={email}
         required
         onChange={e => setEmail(e.target.value)}
+        placeholder="Email"
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">Username</label>
         <input
         id='username'
         type='text'
         value={username}
         required
         onChange={e => setUsername(e.target.value)}
+        placeholder="Username"
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="firstName">First Name</label>
         <input
         id='firstName'
         type='text'
         value={firstName}
         onChange={e => setFirstName(e.target.value)}
+        placeholder="First Name"
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="lastName">Last Name:</label>
+        <label htmlFor="lastName">Last Name</label>
         <input
         id='lastName'
         type='text'
         value={lastName}
         onChange={e => setLastName(e.target.value)}
+        placeholder="Last Name"
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
         id='password'
         type='password'
         value={password}
         onChange={e => setPassword(e.target.value)}
+        placeholder="Password"
+        required
         />
       </div>
 
       <div className='formElement' >
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <label htmlFor="confirmPassword">Confirm Password</label>
         <input
         id='confirmPassword'
         type='password'
         value={confirmPassword}
         onChange={e => setConfirmPassword(e.target.value)}
+        placeholder="Confirm Password"
+        required
         />
       </div>
 
-      <button className='formElement' type='submit'>Signup</button>
-      <button className='formElement' onClick={demoUser}>Login as demo user</button>
+      <button disabled={validationErrors.length > 0 && hasSubmitted} className='formButton' type='submit'>Signup</button>
+      <button className='formButton' onClick={demoUser}>Login as demo user</button>
 
     </form>
   );

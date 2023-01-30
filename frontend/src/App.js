@@ -7,20 +7,22 @@ import UserPage from "./components/UserPage";
 import CreateSongForm from "./components/CreateSongForm";
 import EditSongForm from "./components/EditSongForm";
 import SongPage from "./components/SongPage";
-import SongListPage from "./components/SongListPage/SongListPage";
+import SongListPage from "./components/AlbumPage/AlbumPage";
 import CreateAlbumForm from "./components/CreateAlbumForm";
 import Footer from "./components/Footer";
 import { restoreUser } from "./store/session";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { getAlbum, resetAlbum, getPlaylist, resetPlaylist } from "./store/display";
-
+import image from'./images/vecteezy_illustration-cute-sky-clouds-beautiful-stylish-isolated-blue_15276835.jpg'
 
 import './index.css';
+import MusicBar from "./components/MusicBar/MusicBar";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const queue = useSelector(state => state.queue);
 
   useEffect(() => {
     dispatch(restoreUser()).then(() => setIsLoaded(true));
@@ -30,7 +32,8 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-    <div className="container">
+    <div className="container" style={{backgroundImage: "url(/images/vecteezy_illustration-cute-sky-clouds-beautiful-stylish-isolated-blue_15276835.jpg)",        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',}}>
 
       <Switch>
 
@@ -67,11 +70,12 @@ function App() {
         </Route>
 
         <Route path={'/albums/:id'}>
-          <SongListPage type={'album'} getItem={getAlbum} resetItem={resetAlbum} iconName={'compact-disc'} />
+          <SongListPage type={'albums'} iconName={'compact-disc'} />
         </Route>
 
       </Switch>
     </div>
+    {Object.keys(queue.nodes).length > 0 && <MusicBar />}
     <Footer />
     </>
   );
