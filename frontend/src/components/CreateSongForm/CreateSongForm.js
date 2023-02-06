@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory} from 'react-router-dom';
+import { Link, Redirect, useHistory} from 'react-router-dom';
 import { createSong } from '../../store/songs';
 import { getUserAlbums } from '../../store/albums';
 
@@ -13,7 +13,6 @@ const CreateSongForm = () => {
   const history = useHistory();
 
   const sessionUser = useSelector(state => state.session.user);
-  const newSong = useSelector(state => state.display.song);
   const albums = Object.values(useSelector(state => state.albums));
 
   const [albumId, setAlbumId] = useState(null);
@@ -168,7 +167,12 @@ const CreateSongForm = () => {
         { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>)}
 
-      <button disabled={!loadedImg} className='formElement' type='submit'>Create Song</button>
+      <div className='form-bottom-buttons'>
+        <Link to={`/users/${sessionUser.id}`}>
+          <button className='formElement'>Cancel</button>
+        </Link>
+        <button disabled={!loadedImg} className='formElement' type='submit'>Create Song</button>
+      </div>
 
     </form>
   );

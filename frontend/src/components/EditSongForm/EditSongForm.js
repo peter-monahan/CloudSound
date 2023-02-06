@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { getSong, editSong, deleteSong } from '../../store/songs';
 
 
@@ -152,8 +152,14 @@ const EditSongForm = () => {
         { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>)}
 
-      <button disabled={!loadedImg} className='formElement' type='submit'>Save</button>
+
+      <div className='form-bottom-buttons'>
+        <Link to={`/songs/${songId}`}>
+          <button className='formElement'>Cancel</button>
+        </Link>
       <button onClick={destroySong}>Delete Song</button>
+      <button disabled={!loadedImg} className='formElement' type='submit'>Save Changes</button>
+      </div>
 
     </form>
   );
