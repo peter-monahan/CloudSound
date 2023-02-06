@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory} from 'react-router-dom';
+import { Link, Redirect, useHistory} from 'react-router-dom';
 import { createAlbum, resetAlbum } from '../../store/display';
 import { getUserAlbums } from '../../store/albums';
 
@@ -115,7 +115,12 @@ const CreateAlbumForm = () => {
         { previewPreview !== '' && <img onError={(e) => setValidImage(false)} src={previewPreview} className='form-prev-image'/>}
       </div>
 
-      <button disabled={!loadedImg} className='formElement' type='submit'>Create Album</button>
+      <div className='form-bottom-buttons'>
+        <Link to={`/users/${sessionUser.id}`}>
+          <button className='formElement'>Cancel</button>
+        </Link>
+        <button disabled={!loadedImg} className='formElement' type='submit'>Create Album</button>
+      </div>
 
     </form>
   );

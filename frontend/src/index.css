@@ -132,3 +132,8 @@ button:disabled {
   text-shadow: none;
   font-size: 11pt;
 }
+
+.form-bottom-buttons {
+  display: flex;
+  column-gap: 10px;
+}
