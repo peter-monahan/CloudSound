@@ -1,5 +1,22 @@
 # CloudSound
 
+**CloudSound** is a full-stack web application, based on [SoundCloud](https://soundcloud.com), with a reimagined fluffier feel.
+
+## [Live site](https://cloudsoundmusic.herokuapp.com/)
+
+
+## Technologies used
+### Frontend
+* Javascript
+* React
+* Redux
+### Backend
+* Node.js
+* Express
+* Sequelize
+* Amazon Web Services
+* PostgreSQL
+
 ## Setup
 
 1. Clone the project
@@ -30,6 +47,21 @@ dotenv npx sequelize db:seed:all
   * Albums can be viewed on the splash page, and user pages
   * Album details can be viewed on that albums page
   * Albums can be created from the users profile page
+
+
+# Images
+## Home Page
+<img width="530" alt="image" src="./home_page.png">
+
+
+## User Page
+<img width="530" alt="image" src="./user_page.png">
+
+## Song Page
+<img width="530" alt="image" src="./song_page.png">
+
+## Album Page
+<img width="530" alt="image" src="./album_page.png">
 
 ---
 ## Database Schema Design
