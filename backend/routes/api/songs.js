@@ -27,6 +27,9 @@ router.post('/', requireAuth, singleMulterUpload('audio'), validateSong, async (
   if(description === '') {
     description = null
   }
+  if(albumId === undefined || albumId === 'undefined') {
+    albumId = null;
+  }
   const song = await user.createSong({title, description, url, previewImage, albumId});
 
   return res.json(song);
