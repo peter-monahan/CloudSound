@@ -21,8 +21,9 @@ router.get('/', async (req, res) => {
 
 router.post('/', requireAuth, singleMulterUpload('audio'), validateSong, async (req, res) => {
   let { title, description, previewImage, albumId} = req.body;
+  console.log("==========++==BEFORE AWS UPLOAD", req.body, req.file);
   const url = await singlePublicFileUpload(req.file);
-  console.log("HEYYYY", url);
+  console.log("==========++==-----=====AFTER AWS UPLOAD", url);
   const { user } = req;
   if(description === '') {
     description = null
